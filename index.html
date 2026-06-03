@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
-    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
-    <!-- Script de Confetti Nativo Embebido (Para no depender de servidores externos) -->
     <script>
         (function() {
             window.lanzarFuegosArtificiales = function() {
@@ -49,12 +46,12 @@
             --btn-green: #2ecc71;
             --btn-yellow: #f1c40f;
             
+            --color-ciencia: #27ae60;
             --color-geografia: #2980b9;
-            --color-entretenimiento: #e67e22;
             --color-historia: #f1c40f;
             --color-arte: #8e44ad;
-            --color-ciencia: #27ae60;
             --color-deportes: #d35400;
+            --color-entretenimiento: #e67e22;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -71,20 +68,8 @@
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(255, 0, 127, 0.2) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(9, 132, 227, 0.2) 0%, transparent 50%);
+            padding: 20px;
         }
-
-        .qr-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        #qrcode { background: white; padding: 5px; border-radius: 4px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; overflow:hidden; }
-        #qrcode img { width: 100%; height: 100%; object-fit: contain; }
 
         .game-wrapper {
             width: 1150px;
@@ -194,84 +179,54 @@
         .screen { padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; }
         .hidden { display: none !important; }
 
-        /* --- TABLERO RUEDA --- */
-        .trivial-wheel {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 10px solid var(--yellow-buzz);
+        /* --- NUEVO TABLERO EXCLUSIVO CON SVG (Cero solapamientos) --- */
+        .wheel-container-svg {
+            width: 380px;
+            height: 380px;
             position: relative;
-            box-shadow: 0 0 35px rgba(255, 211, 42, 0.4);
-            margin-bottom: 30px;
-            background: conic-gradient(
-                var(--color-ciencia) 0deg 60deg,
-                var(--color-geografia) 60deg 120deg,
-                var(--color-historia) 120deg 180deg,
-                var(--color-arte) 180deg 240deg,
-                var(--color-deportes) 240deg 300deg,
-                var(--color-entretenimiento) 300deg 360deg
-            );
-            overflow: hidden;
+            margin-bottom: 25px;
         }
 
-        .wheel-segment {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: bottom right;
+        .wheel-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(255, 211, 42, 0.25));
+        }
+
+        .wheel-segment-clickable {
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.2s;
+            transition: transform 0.2s, filter 0.2s;
+            transform-origin: 200px 200px;
         }
 
-        .segment-1 { top: 0; left: 0; transform: rotate(30deg) skewY(30deg); }
-        .segment-2 { top: 0; left: 0; transform: rotate(90deg) skewY(30deg); }
-        .segment-3 { top: 0; left: 0; transform: rotate(150deg) skewY(30deg); }
-        .segment-4 { top: 0; left: 0; transform: rotate(210deg) skewY(30deg); }
-        .segment-5 { top: 0; left: 0; transform: rotate(270deg) skewY(30deg); }
-        .segment-6 { top: 0; left: 0; transform: rotate(330deg) skewY(30deg); }
-
-        .segment-content {
-            transform: skewY(-30deg) rotate(-30deg) translate(35px, 35px);
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            font-weight: 900;
-            font-size: 0.75rem;
-            text-align: center;
-            text-transform: uppercase;
-            pointer-events: none;
+        .wheel-segment-clickable:hover {
+            filter: brightness(1.25);
+            transform: scale(1.02);
         }
-        
-        .segment-3 .segment-content { color: #000; text-shadow: none; }
-        .wheel-segment:hover { filter: brightness(1.3); }
 
-        .wheel-segment.completed {
-            background: #222 !important;
-            filter: none !important;
+        .wheel-segment-clickable.completed {
             cursor: not-allowed;
-        }
-        .wheel-segment.completed .segment-content {
-            color: var(--yellow-buzz) !important;
-            text-shadow: 0 0 5px rgba(255,211,42,0.5);
+            filter: saturate(0.1) brightness(0.4) !important;
+            transform: none !important;
         }
 
-        .wheel-center {
-            position: absolute;
-            width: 50px; height: 50px;
-            background: var(--bg-card);
-            border: 4px solid var(--yellow-buzz);
-            border-radius: 50%;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
+        .wheel-svg-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 900;
+            fill: #ffffff;
+            text-anchor: middle;
+            pointer-events: none;
+            letter-spacing: 1px;
         }
 
-        .btn-final-trigger {
-            background: linear-gradient(135deg, #ff007f, #ff5e62); color: #fff; border: none; padding: 18px 40px;
-            font-size: 1.3rem; font-weight: 900; border-radius: 50px; cursor: pointer; box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
-            text-transform: uppercase; animation: pulseBtn 1.2s infinite;
+        .wheel-svg-icon {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 20px;
+            fill: #ffffff;
+            text-anchor: middle;
+            pointer-events: none;
         }
 
         /* --- PREGUNTAS --- */
@@ -310,17 +265,6 @@
 </head>
 <body>
 
-    <div class="qr-panel">
-        <div>
-            <h4 style="font-size:0.85rem; color:var(--yellow-buzz);">¡Escanea para Jugar!</h4>
-            <p style="font-size: 0.75rem; color: #aaa;">Acceso rápido para los invitados</p>
-        </div>
-        <!-- QR Real embebido en imagen pura (Ya no puede fallar ni bloquear el juego) -->
-        <div id="qrcode">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUEAYAAADg0b9KAAAABmJLR0QA/wD/AP+gvaeTAAAFJklEQVR42u2bS3bcMAhEOfbefffcM3vVInXgZgA6f0mWH8UnKArAgKAnS379+vXw79eXfL6+pMvXl3z+rZf2Nsc6H90X3z67Z/bK7vOf/b2X9pS/bN/8+fWe3TP77+6YfdtLe9pn98re8pftZfvm9pndM/v2v9uPf9pnn91X9sqe9uy+7X/96Z9PnzpLbe9+6bX3rE6v6vU867E33vFv3/60V/bKnvbsnvaUv317P/vpU399+nTePf7p277bK3vKX7bv+YxP+45P+zW/+VpPe3bf/W8/+ulPf/oG3E/vs/60V/bKnvbZPWVve8pf98ynfeunfevPe/60v27/2/f66VP/Z3vPnz5nPfe1XvO1nvbnPfY9f9rfvvdP//n0X38D7vTz9O0//df+b6/sk773s3vaZ/fKrvu3T99Anb5n97S/bt/+/P1ve9pPf+7nvOdrfepPn9rZ/p4/7Z/930/f0bZ/9u9/29O3vffsnn57Zf/67U+f+jsb+Onb3v3Za70DdtXf3v9VfevvePZvv+Npf/vsvqO9sk/aK/vsrveUn91Pe3ZP2dP+b0/9O0fK9uz+tWf3nT3ttU773/Y9v6on7ZNP2id9ZffUv/V7vNZ3e0ffZ0997X+2Z/faK3va0T1lr+ypPe3p3/Fv3/Ppv/7O78D/pY7W7vYvfa2/9rXv+Z/2yZ7+a89un90ze+1/tm/f/vTpv7OB3U/ZfeWfvs9rfbdP+p/tPf/bXtkrvffWv/70Dfg/v96zn/7p25/9038d/exO+/Mv9bRP2id72id9Zff9V/b0/0Zf2X39Z0/9OxvY/RxtbE8ffR/9Z/f9r3vaK3vaUffXf/Z/fQf+b3/236OnfXbPr7329TxlX/X8Z/f0X/v3v+3pNfP/bM/uN/ZUnT596q997V/69J6q03v2tE/ZUz9lz9We8id9+nbV2X3bs3vttZ60Tz5pr+zpve/49A3Uf6mjdba/52v9177WZ3vaT99A/S/7Uffsk77We2X3bZ8+ffpXdfpXfXbfr96A6v7t0zdQp09XfXbfv97A6v5re3b/W993wO6fPvp/m6P+Kbuv7NW+o097dU7/rnrvZ/fM/m+P+uWvv/P2nL4B+/Y7ZffP/6oPqTqtTr/t0zcgfe+e/unTv6vO7pn9m6M++m9/yq5y7M23p33KXvW1rvWZfeUzNlD7Wq/s9E+f2tf27E579vRPn/7vffSff/qf7b+6v3u2t0/f/uxPe+3p27f//NP//w78p6/+mZ+yr/pTe672E9v3fNpv+4m9sqf37vFv3/60f/Z/e0ff9vSe9kmf0f23ffumT5++ATt9Anbypz1XnfdP+5R9ZU/ts/um793/5jOf2p/3yP7b/vTpv73/bY7629M+5S999bWe8muf9rRP+ZRPNFB7dk/V6Xt2T9mpPeVf9fTpG+g/vefqv6rTO1Kn95M+6RPZUz7Vfvv9X/vpG3DVPb8Df8q+42v/Z987/tn+rXv2/27f/vPpHXj6v81R2X/9HX9F90/6itZ79rR/9v8O3P2pOrvXftX/bO9p//63/fPpfwb8X/b+z3vK/+39E6p21H3Xv/WpPfve/R04fafXzG9P7Z79a/9f/h04/Z9O++nbe/+0T/nffMe3/vWnb8B+3vO1nvaJPP0TefonfXrv//wHfWb3CdgJ2AnYCdjJp0/97RtwO6BOn/Yp+9vPf2p/3fM/82/f/gM60AnYCdjJn/YpP//v7/wPZ0AnYCcfoAOdgJ18gA50Anby6X/3D4BvY0P46U3cAAAAAElFTkSuQmCC" alt="Código QR del Juego" />
-        </div>
-    </div>
-
     <div class="game-wrapper">
         <header>
             <h1>BUZZ! x TRIVIAL PURSUIT</h1>
@@ -345,15 +289,51 @@
 
             <main style="position: relative;">
                 <section id="board-screen" class="screen">
-                    <div class="trivial-wheel" id="wheel">
-                        <div class="wheel-segment segment-1" data-category="ciencia"><div class="segment-content"><i class="fa-solid fa-flask"></i><br>Ciencia</div></div>
-                        <div class="wheel-segment segment-2" data-category="geografia"><div class="segment-content"><i class="fa-solid fa-earth-americas"></i><br>Geografía</div></div>
-                        <div class="wheel-segment segment-3" data-category="historia"><div class="segment-content"><i class="fa-solid fa-landmark"></i><br>Historia</div></div>
-                        <div class="wheel-segment segment-4" data-category="arte"><div class="segment-content"><i class="fa-solid fa-palette"></i><br>Arte</div></div>
-                        <div class="wheel-segment segment-5" data-category="deportes"><div class="segment-content"><i class="fa-solid fa-volleyball"></i><br>Deportes</div></div>
-                        <div class="wheel-segment segment-6" data-category="entretenimiento"><div class="segment-content"><i class="fa-solid fa-film"></i><br>Cine</div></div>
-                        <div class="wheel-center"></div>
+                    
+                    <div class="wheel-container-svg" id="wheel-box">
+                        <svg class="wheel-svg" viewBox="0 0 400 400">
+                            <circle cx="200" cy="200" r="185" fill="none" stroke="#ffd32a" stroke-width="10" />
+                            
+                            <g class="wheel-segment-clickable" data-category="ciencia">
+                                <path d="M200,200 L200,20 A180,180 0 0,1 355.88,110 Z" fill="#27ae60" stroke="#150f30" stroke-width="4"/>
+                                <text x="250" y="85" class="wheel-svg-icon">&#xf0c3;</text>
+                                <text x="250" y="105" class="wheel-svg-text">CIENCIA</text>
+                            </g>
+
+                            <g class="wheel-segment-clickable" data-category="geografia">
+                                <path d="M200,200 L355.88,110 A180,180 0 0,1 355.88,290 Z" fill="#2980b9" stroke="#150f30" stroke-width="4"/>
+                                <text x="300" y="195" class="wheel-svg-icon">&#xf5a0;</text>
+                                <text x="300" y="215" class="wheel-svg-text">GEOGRAFÍA</text>
+                            </g>
+
+                            <g class="wheel-segment-clickable" data-category="historia">
+                                <path d="M200,200 L355.88,290 A180,180 0 0,1 200,380 Z" fill="#f1c40f" stroke="#150f30" stroke-width="4"/>
+                                <text x="250" y="295" class="wheel-svg-icon" fill="#000000" style="fill:#000;">&#xf66f;</text>
+                                <text x="250" y="315" class="wheel-svg-text" fill="#000000" style="fill:#000;">HISTORIA</text>
+                            </g>
+
+                            <g class="wheel-segment-clickable" data-category="arte">
+                                <path d="M200,200 L200,380 A180,180 0 0,1 44.12,290 Z" fill="#8e44ad" stroke="#150f30" stroke-width="4"/>
+                                <text x="150" y="295" class="wheel-svg-icon">&#xf53f;</text>
+                                <text x="150" y="315" class="wheel-svg-text">ARTE</text>
+                            </g>
+
+                            <g class="wheel-segment-clickable" data-category="deportes">
+                                <path d="M200,200 L44.12,290 A180,180 0 0,1 44.12,110 Z" fill="#d35400" stroke="#150f30" stroke-width="4"/>
+                                <text x="100" y="195" class="wheel-svg-icon">&#xf447;</text>
+                                <text x="100" y="215" class="wheel-svg-text">DEPORTES</text>
+                            </g>
+
+                            <g class="wheel-segment-clickable" data-category="entretenimiento">
+                                <path d="M200,200 L44.12,110 A180,180 0 0,1 200,20 Z" fill="#e67e22" stroke="#150f30" stroke-width="4"/>
+                                <text x="150" y="85" class="wheel-svg-icon">&#xf008;</text>
+                                <text x="150" y="105" class="wheel-svg-text">CINE</text>
+                            </g>
+
+                            <circle cx="200" cy="200" r="30" fill="#150f30" stroke="#ffd32a" stroke-width="4" />
+                        </svg>
                     </div>
+
                     <button id="final-question-btn" class="btn-final-trigger hidden">¡PREGUNTA FINAL DE CUMPLEAÑOS!</button>
                 </section>
 
@@ -396,7 +376,7 @@
             ],
             historia: [
                 { q: "¿En qué año cayó el Imperio Romano de Occidente?", a: ["476 d.C.", "1492 d.C.", "395 d.C.", "711 d.C."], c: 0 },
-                { q: "Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
+                { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
                 { q: "¿Qué reina financió el viaje de Cristóbal Colón?", a: ["Isabel la Católica", "Juana la Loca", "María de Médici", "Isabel II"], c: 0 },
                 { q: "¿En qué país nació Adolf Hitler?", a: ["Alemania", "Austria", "Polonia", "Hungría"], c: 1 },
                 { q: "¿Qué civilización construyó las ruinas de Machu Picchu?", a: ["Mayas", "Aztecas", "Incas", "Olmecas"], c: 2 },
@@ -415,7 +395,7 @@
                 { q: "¿Quién ostenta el récord de más títulos individuales de Grand Slam masculinos?", a: ["Rafael Nadal", "Roger Federer", "Novak Djokovic", "Carlos Alcaraz"], c: 2 },
                 { q: "¿Qué jugador europeo se convirtió en el primer jugador en la historia de la NBA en ganar el premio al Jugador Más Valioso (MVP) y el MVP de las Finales en la misma temporada?", a: ["Dirk Nowitzki", "Tony Parker", "Giannis Antetokounmpo", "Pau Gasol"], c: 2 },
                 { q: "¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 },
-                { q: "Quién es el máximo goleador en la historia de la Selección Española de Fútbol?", a: ["David Villa", "Fernando Torres", "Raúl González", "Álvaro Morata"], c: 0 }
+                { q: "¿Quién es el máximo goleador en la historia de la Selección Española de Fútbol?", a: ["David Villa", "Fernando Torres", "Raúl González", "Álvaro Morata"], c: 0 }
             ],
             entretenimiento: [
                 { q: "¿Qué cinta ganó el primer Óscar a Mejor Película de Animación?", a: ["Shrek", "Toy Story", "Monstruos S.A.", "Buscando a Nemo"], c: 0 },
@@ -440,8 +420,8 @@
         const boardScreen = document.getElementById('board-screen');
         const quizScreen = document.getElementById('quiz-screen');
         const endScreen = document.getElementById('end-screen');
-        const wheel = document.getElementById('wheel');
-        const segments = document.querySelectorAll('.wheel-segment');
+        const wheelBox = document.getElementById('wheel-box');
+        const segments = document.querySelectorAll('.wheel-segment-clickable');
         const questionText = document.getElementById('question-text');
         const answersContainer = document.getElementById('answers-container');
         const finalQuestionBtn = document.getElementById('final-question-btn');
@@ -459,7 +439,7 @@
             if (mood === 'crazy') presenterChar.classList.add('crazy');
         }
 
-        // ACTIVACIÓN DE LOS CLICS EN LA RUEDA (Desbloqueado al 100%)
+        // CONTROL DE SELECCIÓN DE CATEGORÍA
         segments.forEach(s => {
             s.addEventListener('click', () => {
                 const cat = s.dataset.category;
@@ -539,7 +519,7 @@
         }
 
         function actualizarTableroUI(cat) {
-            const segment = document.querySelector(`.wheel-segment[data-category="${cat}"]`);
+            const segment = document.querySelector(`.wheel-segment-clickable[data-category="${cat}"]`);
             if(segment) segment.classList.add('completed');
             
             const total = Object.values(gameState.quesitos).filter(v => v === true).length;
@@ -547,7 +527,7 @@
 
             if (total === 6) {
                 setTimeout(() => {
-                    wheel.classList.add('hidden');
+                    wheelBox.classList.add('hidden');
                     finalQuestionBtn.classList.remove('hidden');
                     setPresenterMood('crazy', "¡Increíble, tienes los 6 quesitos del Trivial! ¡Desbloqueaste la Gran Pregunta Final de Cumpleaños!");
                 }, 1000);
@@ -556,6 +536,7 @@
 
         function volverAlTablero() {
             quizScreen.classList.add('hidden');
+            boardScreen.xl = false;
             boardScreen.classList.remove('hidden');
         }
 
