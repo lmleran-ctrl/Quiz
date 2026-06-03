@@ -74,7 +74,6 @@
             padding: 10px;
         }
 
-        /* AJUSTE: Ahora se adapta a pantallas pequeñas de forma fluida */
         .game-wrapper {
             width: 100%;
             max-width: 1150px;
@@ -113,7 +112,6 @@
             border-radius: 20px;
         }
 
-        /* AJUSTE: Grid flexible que pasa a 1 columna en móviles */
         .screen-container {
             display: grid;
             grid-template-columns: 340px 1fr;
@@ -240,7 +238,6 @@
         .quiz-panel { display: flex; flex-direction: column; width: 100%; }
         #question-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; min-height: 60px; text-align: center; }
         
-        /* AJUSTE: Los botones de respuesta se apilan en 1 columna en pantallas estrechas */
         .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 20px; }
         
         .answer-btn {
@@ -282,43 +279,15 @@
         }
         .prize-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* ==========================================================================
-           MÁGICA RESPONSIVA (MEDIA QUERIES) - SE ACTIVA EN MÓVILES
-           ========================================================================== */
+        /* Responsive Móvil */
         @media (max-width: 850px) {
-            .screen-container {
-                grid-template-columns: 1fr; /* Coloca el panel del presentador arriba y el juego abajo */
-            }
-            
-            .presenter-panel {
-                border-right: none;
-                border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-                min-height: 280px;
-                justify-content: center;
-                padding-top: 110px; /* Espacio para el bocadillo de texto */
-            }
-
-            .speech-bubble {
-                top: 15px;
-            }
-
-            .birthday-host-frame {
-                width: 110px;
-                height: 110px;
-                margin-bottom: 0;
-            }
-
-            .answers-grid {
-                grid-template-columns: 1fr; /* Respuestas en una sola fila vertical, perfecto para el dedo */
-            }
-
-            .game-wrapper {
-                min-height: auto;
-            }
-            
-            #question-text {
-                font-size: 1.15rem;
-            }
+            .screen-container { grid-template-columns: 1fr; }
+            .presenter-panel { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.1); min-height: 280px; justify-content: center; padding-top: 110px; }
+            .speech-bubble { top: 15px; }
+            .birthday-host-frame { width: 110px; height: 110px; margin-bottom: 0; }
+            .answers-grid { grid-template-columns: 1fr; }
+            .game-wrapper { min-height: auto; }
+            #question-text { font-size: 1.15rem; }
         }
     </style>
 </head>
@@ -422,33 +391,38 @@
             ],
             geografia: [
                 { q: "¿Cuál es el río más largo del mundo?", a: ["Nilo", "Amazonas", "Misisipi", "Yangtsé"], c: 1 },
-                { q: "¿Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 }
+                { q: "¿Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 },
+                { q: "¿Qué país tiene forma de bota y está rodeado por el mar Mediterráneo?", a: ["Grecia", "España", "Italia", "Portugal"], c: 2 }
             ],
             historia: [
                 { q: "¿En qué año cayó el Imperio Romano de Occidente?", a: ["476 d.C.", "1492 d.C.", "395 d.C.", "711 d.C."], c: 0 },
-                { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 }
+                { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
+                { q: "¿Qué civilización antigua construyó la majestuosa ciudad de Machu Picchu?", a: ["Los Aztecas", "Los Mayas", "Los Incas", "Los Olmecas"], c: 2 }
             ],
             arte: [
                 { q: "¿Quién pintó la famosa obra de la 'Mona Lisa'?", a: ["Van Gogh", "Miguel Ángel", "Leonardo da Vinci", "Picasso"], c: 2 },
-                { q: "¿Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 }
+                { q: "¿Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 },
+                { q: "¿A qué famoso pintor renacentista le debemos la espectacular bóveda de la Capilla Sixtina?", a: ["Rafael", "Donatello", "Miguel Ángel", "Botticelli"], c: 2 }
             ],
             deportes: [
                 { q: "¿Qué selección nacional ha levantado más Copas del Mundo de Fútbol?", a: ["Alemania", "Italia", "Brasil", "Argentina"], c: 2 },
-                { q: "¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 }
+                { q: "¡A ver los futboleros! ¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 },
+                { q: "¿Cada cuántos años se celebran tradicionalmente los Juegos Olímpicos?", a: ["Cada 2 años", "Cada 3 años", "Cada 4 años", "Cada 5 años"], c: 2 }
             ],
             entretenimiento: [
                 { q: "¿Qué cinta ganó el primer Óscar a Mejor Película de Animación?", a: ["Shrek", "Toy Story", "Monstruos S.A.", "Buscando a Nemo"], c: 0 },
-                { q: "¿Quién interpretó a Jack Dawson en la película Titanic?", a: ["Brad Pitt", "Leonardo DiCaprio", "Matt Damon", "Johnny Depp"], c: 1 }
+                { q: "¿Quién interpretó a Jack Dawson en la película Titanic?", a: ["Brad Pitt", "Leonardo DiCaprio", "Matt Damon", "Johnny Depp"], c: 1 },
+                { q: "¿Cómo se llama el reino ficticio donde se desarrolla la película 'El Rey León'?", a: ["Far Far Away", "Las Tierras del Orgullo", "Arendelle", "Madagascar"], c: 1 }
             ],
             final: {
-                q: "¿Cuál será el próximo concierto al que acudirá la cumpleañera con estas entradas?",
+                q: "¿Cuál será el próximo concierto al que acudirá la cumpleañera?",
                 a: ["Julio Iglesias", "Estopa", "Melendi", "Karol G"],
                 c: 3
             }
         };
 
         let gameState = { 
-            quesitos: { ciencia: false, geografia: false, historia: false, arte: false, deportes: false, entretenimiento: false }, 
+            quesitos: { ciencia: false, geography: false, historia: false, arte: false, deportes: false, entretenimiento: false }, 
             categoriaActual: null, indexPreguntaActual: 0, esPreguntaFinal: false 
         };
 
@@ -532,7 +506,12 @@
                     gameState.quesitos[gameState.categoriaActual] = true;
                     setPresenterMood('happy', "¡Toma ya! ¡Respuesta correcta, sumamos un quesito!");
                     actualizarTableroUI(gameState.categoriaActual);
-                    setTimeout(() => volverAlTablero(), 1800);
+                    
+                    // Solo volvemos al tablero automáticamente si NO tenemos los 6 quesitos conseguidos
+                    const total = Object.values(gameState.quesitos).filter(v => v === true).length;
+                    if (total < 6) {
+                        setTimeout(() => volverAlTablero(), 1800);
+                    }
                 }
             } else {
                 btn.classList.add('incorrect-choice');
@@ -561,7 +540,7 @@
             try {
                 const audioPremio = new Audio('cancion.mp3');
                 audioPremio.volume = 0.7;
-                audioPremio.play().catch(e => console.log("Audio en cola."));
+                audioPremio.play().catch(e => console.log("Audio listo."));
             } catch(e) {
                 console.log("Error de audio.");
             }
@@ -575,11 +554,18 @@
             quesitosCountLabel.textContent = `Quesitos: ${total} / 6`;
 
             if (total === 6) {
+                // MODIFICACIÓN: Ponemos el texto de forma inmediata al ganar el 6º quesito
+                setTimeout(() => {
+                    quizScreen.classList.add('hidden');
+                    boardScreen.classList.remove('hidden');
+                    setPresenterMood('crazy', "¡Ya casi lo tienes, tú puedes!");
+                }, 1800);
+
+                // Espera de 5 segundos en el tablero antes de mostrar el botón final
                 setTimeout(() => {
                     wheelBox.classList.add('hidden');
                     finalQuestionBtn.classList.remove('hidden');
-                    setPresenterMood('crazy', "¡Increíble! ¡Tenéis los 6 quesitos! Pulsad el gran botón... ¡Llegó mi pregunta definitiva!");
-                }, 1000);
+                }, 5000 + 1800); 
             }
         }
 
