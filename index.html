@@ -71,18 +71,20 @@
             background-image: 
                 radial-gradient(circle at 20% 30%, rgba(255, 0, 127, 0.2) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(9, 132, 227, 0.2) 0%, transparent 50%);
-            padding: 20px;
+            padding: 10px;
         }
 
+        /* AJUSTE: Ahora se adapta a pantallas pequeñas de forma fluida */
         .game-wrapper {
-            width: 1150px;
-            height: 750px;
+            width: 100%;
+            max-width: 1150px;
+            min-height: 750px;
             background: var(--bg-card);
             border: 4px solid var(--yellow-buzz);
             box-shadow: 0 0 40px rgba(255, 211, 42, 0.2);
             border-radius: 24px;
             display: grid;
-            grid-template-rows: 80px 1fr;
+            grid-template-rows: auto 1fr;
             overflow: hidden;
         }
 
@@ -91,24 +93,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
+            padding: 15px 25px;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         header h1 {
             font-family: 'Fredoka', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--yellow-buzz);
         }
 
         .header-score {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
             background: var(--accent);
             padding: 6px 16px;
             border-radius: 20px;
         }
 
+        /* AJUSTE: Grid flexible que pasa a 1 columna en móviles */
         .screen-container {
             display: grid;
             grid-template-columns: 340px 1fr;
@@ -125,6 +130,7 @@
             justify-content: flex-end;
             padding: 25px;
             position: relative;
+            min-height: 380px;
         }
 
         .speech-bubble {
@@ -132,7 +138,8 @@
             color: #111;
             border-radius: 16px;
             padding: 15px;
-            width: 290px;
+            width: 90%;
+            max-width: 290px;
             font-size: 0.95rem;
             font-weight: 700;
             position: absolute;
@@ -149,13 +156,13 @@
         }
 
         .birthday-host-frame {
-            width: 220px;
-            height: 220px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             border: 5px solid var(--accent);
             box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
             overflow: hidden;
-            margin-bottom: 60px;
+            margin-bottom: 20px;
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
             background-color: #111;
         }
@@ -168,36 +175,23 @@
         }
 
         /* Animaciones */
-        .birthday-host-frame.dance {
-            animation: hostBounce 0.4s infinite alternate;
-            border-color: #2ecc71;
-            box-shadow: 0 0 35px rgba(46, 204, 113, 0.8);
-        }
-
-        .birthday-host-frame.sad {
-            animation: hostShiver 0.15s infinite;
-            border-color: #e74c3c;
-            box-shadow: 0 0 25px rgba(231, 76, 60, 0.6);
-        }
-
-        .birthday-host-frame.crazy {
-            animation: hostJump 0.3s infinite alternate;
-            border-color: var(--yellow-buzz);
-            box-shadow: 0 0 40px rgba(255, 211, 42, 0.9);
-        }
+        .birthday-host-frame.dance { animation: hostBounce 0.4s infinite alternate; border-color: #2ecc71; box-shadow: 0 0 35px rgba(46, 204, 113, 0.8); }
+        .birthday-host-frame.sad { animation: hostShiver 0.15s infinite; border-color: #e74c3c; box-shadow: 0 0 25px rgba(231, 76, 60, 0.6); }
+        .birthday-host-frame.crazy { animation: hostJump 0.3s infinite alternate; border-color: var(--yellow-buzz); box-shadow: 0 0 40px rgba(255, 211, 42, 0.9); }
 
         @keyframes hostBounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
         @keyframes hostJump { from { transform: translateY(0) scale(1) rotate(-2deg); } to { transform: translateY(-25px) scale(1.05) rotate(2deg); } }
         @keyframes hostShiver { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px) translateY(2px); } }
 
         /* --- PANTALLAS --- */
-        .screen { padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; }
+        .screen { padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; min-height: 100%; }
         .hidden { display: none !important; }
 
-        /* --- TABLERO EXCLUSIVO CON SVG --- */
+        /* --- TABLERO --- */
         .wheel-container-svg {
-            width: 380px;
-            height: 380px;
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1/1;
             position: relative;
             margin-bottom: 25px;
         }
@@ -208,104 +202,71 @@
             filter: drop-shadow(0 0 20px rgba(255, 211, 42, 0.25));
         }
 
-        .wheel-segment-clickable {
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            transform-origin: 200px 200px;
-        }
+        .wheel-segment-clickable { cursor: pointer; transition: transform 0.2s, opacity 0.2s; transform-origin: 200px 200px; }
+        .wheel-segment-clickable:hover { opacity: 0.85; transform: scale(1.02); }
+        .wheel-segment-clickable.completed { cursor: not-allowed; pointer-events: none; }
+        .wheel-segment-clickable.completed path { fill: #221c38 !important; stroke: #110c22 !important; }
+        .wheel-segment-clickable.completed text { fill: #443c5e !important; opacity: 0.5; }
 
-        .wheel-segment-clickable:hover {
-            opacity: 0.85;
-            transform: scale(1.02);
-        }
-
-        .wheel-segment-clickable.completed {
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        
-        .wheel-segment-clickable.completed path {
-            fill: #221c38 !important;
-            stroke: #110c22 !important;
-        }
-        
-        .wheel-segment-clickable.completed text {
-            fill: #443c5e !important;
-            opacity: 0.5;
-        }
-
-        .wheel-svg-text {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            font-weight: 900;
-            fill: #ffffff;
-            text-anchor: middle;
-            pointer-events: none;
-            letter-spacing: 1px;
-        }
-
-        .wheel-svg-icon {
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 20px;
-            fill: #ffffff;
-            text-anchor: middle;
-            pointer-events: none;
-        }
+        .wheel-svg-text { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 900; fill: #ffffff; text-anchor: middle; pointer-events: none; letter-spacing: 1px; }
+        .wheel-svg-icon { font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 20px; fill: #ffffff; text-anchor: middle; pointer-events: none; }
 
         /* --- BOTÓN PREGUNTA FINAL --- */
         .btn-final-trigger {
             background: radial-gradient(circle, #ff007f 0%, #c2005f 100%);
             color: #ffffff;
             font-family: 'Fredoka', sans-serif;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            padding: 30px 50px;
-            border: 5px solid var(--yellow-buzz);
+            padding: 20px 30px;
+            border: 4px solid var(--yellow-buzz);
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 0, 127, 0.6), inset 0 0 15px rgba(255,255,255,0.5);
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.6);
             text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-            transition: transform 0.2s, box-shadow 0.2s;
             animation: pulseBtn 1.5s infinite;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            width: 90%;
+            text-align: center;
         }
 
         @keyframes pulseBtn {
-            0% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 127, 0.6); }
-            50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(255, 0, 127, 0.9); }
-            100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 127, 0.6); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
 
         /* --- PREGUNTAS --- */
         .quiz-panel { display: flex; flex-direction: column; width: 100%; }
-        #question-text { font-size: 1.6rem; font-weight: 700; margin-bottom: 25px; min-height: 70px; }
-        .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-bottom: 20px; }
+        #question-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; min-height: 60px; text-align: center; }
+        
+        /* AJUSTE: Los botones de respuesta se apilan en 1 columna en pantallas estrechas */
+        .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 20px; }
         
         .answer-btn {
-            border: 3px solid #000; border-radius: 12px; padding: 22px; font-size: 1.2rem; font-weight: 700;
-            color: #fff; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; box-shadow: 0 6px 0px #000000;
+            border: 3px solid #000; border-radius: 12px; padding: 18px; font-size: 1rem; font-weight: 700;
+            color: #fff; cursor: pointer; transition: transform 0.1s; box-shadow: 0 5px 0px #000000;
             text-align: left; display: flex; align-items: center;
         }
-        .answer-btn::before { content: ''; width: 20px; height: 20px; border-radius: 50%; margin-right: 15px; border: 2px solid #fff; flex-shrink: 0; }
+        .answer-btn::before { content: ''; width: 16px; height: 16px; border-radius: 50%; margin-right: 12px; border: 2px solid #fff; flex-shrink: 0; }
         .answer-btn:nth-child(1) { background: var(--btn-blue); }
         .answer-btn:nth-child(2) { background: var(--btn-orange); }
         .answer-btn:nth-child(3) { background: var(--btn-green); }
         .answer-btn:nth-child(4) { background: var(--btn-yellow); color: #000; }
         .answer-btn:nth-child(4)::before { border-color: #000; }
 
-        .answer-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 0px #000000; }
+        .answer-btn:hover:not(:disabled) { transform: translateY(-2px); }
         .answer-btn:disabled { opacity: 0.2; cursor: not-allowed; }
         .answer-btn.correct-choice { background-color: #2ecc71 !important; color: #fff !important; }
         .answer-btn.incorrect-choice { background-color: #e74c3c !important; color: #fff !important; }
 
-        .btn-back { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; }
+        .btn-back { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; align-self: center; }
 
-        /* --- PREMIO FINAL REOPTIMIZADO PARA CHROME --- */
+        /* --- PREMIO FINAL --- */
         .prize-container {
-            width: 320px; 
-            min-height: 440px; 
+            width: 100%;
+            max-width: 300px; 
+            min-height: 400px; 
             border: 5px solid var(--yellow-buzz); 
             border-radius: 15px;
             overflow: hidden; 
@@ -320,13 +281,52 @@
             text-align: center;
         }
         .prize-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ==========================================================================
+           MÁGICA RESPONSIVA (MEDIA QUERIES) - SE ACTIVA EN MÓVILES
+           ========================================================================== */
+        @media (max-width: 850px) {
+            .screen-container {
+                grid-template-columns: 1fr; /* Coloca el panel del presentador arriba y el juego abajo */
+            }
+            
+            .presenter-panel {
+                border-right: none;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+                min-height: 280px;
+                justify-content: center;
+                padding-top: 110px; /* Espacio para el bocadillo de texto */
+            }
+
+            .speech-bubble {
+                top: 15px;
+            }
+
+            .birthday-host-frame {
+                width: 110px;
+                height: 110px;
+                margin-bottom: 0;
+            }
+
+            .answers-grid {
+                grid-template-columns: 1fr; /* Respuestas en una sola fila vertical, perfecto para el dedo */
+            }
+
+            .game-wrapper {
+                min-height: auto;
+            }
+            
+            #question-text {
+                font-size: 1.15rem;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="game-wrapper">
         <header>
-            <h1>BUZZ! x TRIVIAL PURSUIT</h1>
+            <h1>BUZZ! x TRIVIAL</h1>
             <div class="header-score" id="quesitos-count">Quesitos: 0 / 6</div>
         </header>
 
@@ -385,7 +385,7 @@
                         </svg>
                     </div>
 
-                    <button id="final-question-btn" class="btn-final-trigger hidden">¡PREGUNTA FINAL DE CUMPLEAÑOS!</button>
+                    <button id="final-question-btn" class="btn-final-trigger hidden">¡PREGUNTA FINAL!</button>
                 </section>
 
                 <section id="quiz-screen" class="screen hidden">
@@ -398,17 +398,15 @@
 
                 <section id="end-screen" class="screen hidden">
                     <div class="prize-container">
-                        <!-- Imagen con capturador de errores optimizado para Chrome -->
                         <img src="premio.png" alt="Premio Final" id="prize-img" 
                              onerror="this.style.display='none'; document.getElementById('backup-text').classList.remove('hidden');">
                         
-                        <!-- Texto de respaldo si Chrome bloquea la carga local de premio.png -->
                         <div id="backup-text" class="hidden" style="font-family: 'Fredoka', sans-serif; color: var(--yellow-buzz); font-size: 1.5rem; text-transform: uppercase;">
                             <i class="fa-solid fa-ticket" style="font-size: 3.5rem; color: var(--accent); margin-bottom: 15px;"></i><br>
                             ¡Tus entradas para<br>Karol G!
                         </div>
                     </div>
-                    <h2 style="color: var(--yellow-buzz); margin-bottom: 10px; font-size: 1.8rem; text-align: center;">¡ENTRADAS CONSEGUIDAS!</h2>
+                    <h2 style="color: var(--yellow-buzz); margin-bottom: 10px; font-size: 1.6rem; text-align: center;">¡ENTRADAS CONSEGUIDAS!</h2>
                     <button style="background:var(--accent); color:white; padding:10px 20px; border:none; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="location.reload()">Volver a jugar</button>
                 </section>
             </main>
@@ -474,21 +472,10 @@
             presenterSpeech.textContent = text;
             presenterFrame.className = "birthday-host-frame"; 
             
-            if (mood === 'normal') {
-                hostImg.src = "normal.jpeg";
-            }
-            if (mood === 'happy') {
-                hostImg.src = "acierto.jpeg";
-                presenterFrame.classList.add('dance');
-            }
-            if (mood === 'sad') {
-                hostImg.src = "error.jpeg";
-                presenterFrame.classList.add('sad');
-            }
-            if (mood === 'crazy') {
-                hostImg.src = "acierto.jpeg";
-                presenterFrame.classList.add('crazy');
-            }
+            if (mood === 'normal') hostImg.src = "normal.jpeg";
+            if (mood === 'happy') { hostImg.src = "acierto.jpeg"; presenterFrame.classList.add('dance'); }
+            if (mood === 'sad') { hostImg.src = "error.jpeg"; presenterFrame.classList.add('sad'); }
+            if (mood === 'crazy') { hostImg.src = "acierto.jpeg"; presenterFrame.classList.add('crazy'); }
         }
 
         segments.forEach(s => {
@@ -507,7 +494,6 @@
             gameState.categoriaActual = cat;
             gameState.indexPreguntaActual = 0;
             gameState.esPreguntaFinal = false;
-            
             boardScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             backBtn.classList.add('hidden');
@@ -540,10 +526,7 @@
                 if (gameState.esPreguntaFinal) {
                     setPresenterMood('crazy', "¡SÍÍÍ! ¡BRUTAL! ¡NOS VAMOS A VER A LA BICHOTA EN SEVILLA!");
                     if (typeof lanzarFuegosArtificiales === 'function') lanzarFuegosArtificiales();
-                    
-                    // Audio disparado en el clic para saltarse bloqueos de Chrome
                     reproducirMusicaPremio();
-                    
                     setTimeout(() => mostrarPremioFinal(), 2000);
                 } else {
                     gameState.quesitos[gameState.categoriaActual] = true;
@@ -578,7 +561,7 @@
             try {
                 const audioPremio = new Audio('cancion.mp3');
                 audioPremio.volume = 0.7;
-                audioPremio.play().catch(e => console.log("Chrome en espera de interacción."));
+                audioPremio.play().catch(e => console.log("Audio en cola."));
             } catch(e) {
                 console.log("Error de audio.");
             }
@@ -586,9 +569,7 @@
 
         function actualizarTableroUI(cat) {
             const segment = document.querySelector(`.wheel-segment-clickable[data-category="${cat}"]`);
-            if(segment) {
-                segment.classList.add('completed');
-            }
+            if(segment) segment.classList.add('completed');
             
             const total = Object.values(gameState.quesitos).filter(v => v === true).length;
             quesitosCountLabel.textContent = `Quesitos: ${total} / 6`;
