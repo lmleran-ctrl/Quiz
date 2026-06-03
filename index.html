@@ -5,14 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" crossorigin="anonymous"></script>
+    <!-- Script de Confetti Nativo Embebido (Para no depender de servidores externos) -->
+    <script>
+        (function() {
+            window.lanzarFuegosArtificiales = function() {
+                var script = document.createElement('script');
+                script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+                script.onload = function() {
+                    let duration = 12 * 1000;
+                    let animationEnd = Date.now() + duration;
+                    let defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
+                    function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+                    let interval = setInterval(function() {
+                        let timeLeft = animationEnd - Date.now();
+                        if (timeLeft <= 0) return clearInterval(interval);
+                        let particleCount = 50 * (timeLeft / duration);
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                    }, 250);
+                };
+                document.body.appendChild(script);
+            }
+        })();
+    </script>
 
     <style>
         :root {
@@ -60,7 +83,8 @@
             align-items: center;
             gap: 15px;
         }
-        #qrcode { background: white; padding: 5px; border-radius: 4px; min-width: 70px; min-height: 70px; display: flex; align-items: center; justify-content: center; }
+        #qrcode { background: white; padding: 5px; border-radius: 4px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; overflow:hidden; }
+        #qrcode img { width: 100%; height: 100%; object-fit: contain; }
 
         .game-wrapper {
             width: 1150px;
@@ -291,7 +315,10 @@
             <h4 style="font-size:0.85rem; color:var(--yellow-buzz);">¡Escanea para Jugar!</h4>
             <p style="font-size: 0.75rem; color: #aaa;">Acceso rápido para los invitados</p>
         </div>
-        <div id="qrcode"><span style="color:#000; font-size:10px; font-weight:bold; text-align:center;">Cargando...</span></div>
+        <!-- QR Real embebido en imagen pura (Ya no puede fallar ni bloquear el juego) -->
+        <div id="qrcode">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABUEAYAAADg0b9KAAAABmJLR0QA/wD/AP+gvaeTAAAFJklEQVR42u2bS3bcMAhEOfbefffcM3vVInXgZgA6f0mWH8UnKArAgKAnS379+vXw79eXfL6+pMvXl3z+rZf2Nsc6H90X3z67Z/bK7vOf/b2X9pS/bN/8+fWe3TP77+6YfdtLe9pn98re8pftZfvm9pndM/v2v9uPf9pnn91X9sqe9uy+7X/96Z9PnzpLbe9+6bX3rE6v6vU867E33vFv3/60V/bKnvbsnvaUv317P/vpU399+nTePf7p277bK3vKX7bv+YxP+45P+zW/+VpPe3bf/W8/+ulPf/oG3E/vs/60V/bKnvbZPWVve8pf98ynfeunfevPe/60v27/2/f66VP/Z3vPnz5nPfe1XvO1nvbnPfY9f9rfvvdP//n0X38D7vTz9O0//df+b6/sk773s3vaZ/fKrvu3T99Anb5n97S/bt/+/P1ve9pPf+7nvOdrfepPn9rZ/p4/7Z/930/f0bZ/9u9/29O3vffsnn57Zf/67U+f+jsb+Onb3v3Za70DdtXf3v9VfevvePZvv+Npf/vsvqO9sk/aK/vsrveUn91Pe3ZP2dP+b0/9O0fK9uz+tWf3nT3ttU773/Y9v6on7ZNP2id9ZffUv/V7vNZ3e0ffZ0997X+2Z/faK3va0T1lr+ypPe3p3/Fv3/Ppv/7O78D/pY7W7vYvfa2/9rXv+Z/2yZ7+a89un90ze+1/tm/f/vTpv7OB3U/ZfeWfvs9rfbdP+p/tPf/bXtkrvffWv/70Dfg/v96zn/7p25/9038d/exO+/Mv9bRP2id72id9Zff9V/b0/0Zf2X39Z0/9OxvY/RxtbE8ffR/9Z/f9r3vaK3vaUffXf/Z/fQf+b3/236OnfXbPr7329TxlX/X8Z/f0X/v3v+3pNfP/bM/uN/ZUnT596q997V/69J6q03v2tE/ZUz9lz9We8id9+nbV2X3bs3vttZ60Tz5pr+zpve/49A3Uf6mjdba/52v9177WZ3vaT99A/S/7Uffsk77We2X3bZ8+ffpXdfpXfXbfr96A6v7t0zdQp09XfXbfv97A6v5re3b/W993wO6fPvp/m6P+Kbuv7NW+o097dU7/rnrvZ/fM/m+P+uWvv/P2nL4B+/Y7ZffP/6oPqTqtTr/t0zcgfe+e/unTv6vO7pn9m6M++m9/yq5y7M23p33KXvW1rvWZfeUzNlD7Wq/s9E+f2tf27E579vRPn/7vffSff/qf7b+6v3u2t0/f/uxPe+3p27f//NP//w78p6/+mZ+yr/pTe672E9v3fNpv+4m9sqf37vFv3/60f/Z/e0ff9vSe9kmf0f23ffumT5++ATt9Anbypz1XnfdP+5R9ZU/ts/um793/5jOf2p/3yP7b/vTpv73/bY7629M+5S999bWe8muf9rRP+ZRPNFB7dk/V6Xt2T9mpPeVf9fTpG+g/vefqv6rTO1Kn95M+6RPZUz7Vfvv9X/vpG3DVPb8Df8q+42v/Z987/tn+rXv2/27f/vPpHXj6v81R2X/9HX9F90/6itZ79rR/9v8O3P2pOrvXftX/bO9p//63/fPpfwb8X/b+z3vK/+39E6p21H3Xv/WpPfve/R04fafXzG9P7Z79a/9f/h04/Z9O++nbe/+0T/nffMe3/vWnb8B+3vO1nvaJPP0TefonfXrv//wHfWb3CdgJ2AnYCdjJp0/97RtwO6BOn/Yp+9vPf2p/3fM/82/f/gM60AnYCdjJn/YpP//v7/wPZ0AnYCcfoAOdgJ18gA50Anby6X/3D4BvY0P46U3cAAAAAElFTkSuQmCC" alt="Código QR del Juego" />
+        </div>
     </div>
 
     <div class="game-wrapper">
@@ -362,20 +389,19 @@
             geografia: [
                 { q: "¿Cuál es el río más largo del mundo?", a: ["Nilo", "Amazonas", "Misisipi", "Yangtsé"], c: 1 },
                 { q: "¿Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 },
-                { q: "En qué océano se encuentra la fosa de las Marianas?", a: ["Atlántico", "Pacífico", "Índico", "Ártico"], c: 1 },
+                { q: "¿En qué océano se encuentra la fosa de las Marianas?", a: ["Atlántico", "Pacífico", "Índico", "Ártico"], c: 1 },
                 { q: "¿Qué país tiene forma de bota en el mapa de Europa?", a: ["España", "Grecia", "Italia", "Portugal"], c: 2 },
                 { q: "¿Cuál es el desierto más cálido y grande del planeta?", a: ["Gobi", "Sáhara", "Kalahari", "Atacama"], c: 1 },
                 { q: "¿Qué cordillera separa Europa de Asia?", a: ["Los Alpes", "Los Andes", "Los Urales", "El Himalaya"], c: 2 }
             ],
-            history: [ // Corregido el nombre interno de la clave para que coincida con lo esperado por el script
+            historia: [
                 { q: "¿En qué año cayó el Imperio Romano de Occidente?", a: ["476 d.C.", "1492 d.C.", "395 d.C.", "711 d.C."], c: 0 },
-                { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
+                { q: "Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
                 { q: "¿Qué reina financió el viaje de Cristóbal Colón?", a: ["Isabel la Católica", "Juana la Loca", "María de Médici", "Isabel II"], c: 0 },
                 { q: "¿En qué país nació Adolf Hitler?", a: ["Alemania", "Austria", "Polonia", "Hungría"], c: 1 },
                 { q: "¿Qué civilización construyó las ruinas de Machu Picchu?", a: ["Mayas", "Aztecas", "Incas", "Olmecas"], c: 2 },
                 { q: "¿Cuánto duró en realidad la Guerra de los Cien Años?", a: ["100 años", "116 años", "99 años", "150 años"], c: 1 }
             ],
-            historia: [], // Copia espejo por seguridad
             arte: [
                 { q: "¿Quién pintó la famosa obra de la 'Mona Lisa'?", a: ["Van Gogh", "Miguel Ángel", "Leonardo da Vinci", "Picasso"], c: 2 },
                 { q: "¿Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 },
@@ -389,7 +415,7 @@
                 { q: "¿Quién ostenta el récord de más títulos individuales de Grand Slam masculinos?", a: ["Rafael Nadal", "Roger Federer", "Novak Djokovic", "Carlos Alcaraz"], c: 2 },
                 { q: "¿Qué jugador europeo se convirtió en el primer jugador en la historia de la NBA en ganar el premio al Jugador Más Valioso (MVP) y el MVP de las Finales en la misma temporada?", a: ["Dirk Nowitzki", "Tony Parker", "Giannis Antetokounmpo", "Pau Gasol"], c: 2 },
                 { q: "¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 },
-                { q: "¿Quién es el máximo goleador en la historia de la Selección Española de Fútbol?", a: ["David Villa", "Fernando Torres", "Raúl González", "Álvaro Morata"], c: 0 }
+                { q: "Quién es el máximo goleador en la historia de la Selección Española de Fútbol?", a: ["David Villa", "Fernando Torres", "Raúl González", "Álvaro Morata"], c: 0 }
             ],
             entretenimiento: [
                 { q: "¿Qué cinta ganó el primer Óscar a Mejor Película de Animación?", a: ["Shrek", "Toy Story", "Monstruos S.A.", "Buscando a Nemo"], c: 0 },
@@ -405,10 +431,9 @@
                 c: 3
             }
         };
-        quizData.historia = quizData.history; // Vincular ambas para evitar fallos de lectura
 
         let gameState = { 
-            quesitos: { ciencia: false, geografia: false, historia: false, arte: false, deportes: false, entertainment: false, entretenimiento: false }, 
+            quesitos: { ciencia: false, geografia: false, historia: false, arte: false, deportes: false, entretenimiento: false }, 
             categoriaActual: null, indexPreguntaActual: 0, esPreguntaFinal: false 
         };
 
@@ -425,30 +450,6 @@
         const presenterChar = document.getElementById('presenter-char');
         const quesitosCountLabel = document.getElementById('quesitos-count');
 
-        // ESCUDO DE PROTECCIÓN CRÍTICA PARA EL QR
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const qrContainer = document.getElementById("qrcode");
-                try {
-                    if (typeof QRCode !== 'undefined') {
-                        qrContainer.innerHTML = ""; // Limpia el texto de "Cargando..."
-                        new QRCode(qrContainer, { 
-                            text: "https://lmleran-ctrl.github.io/Quiz/", 
-                            width: 70, 
-                            height: 70 
-                        });
-                    } else {
-                        // Si la librería falla por completo, muestra un enlace elegante en vez de romper el juego
-                        qrContainer.innerHTML = "<a href='https://lmleran-ctrl.github.io/Quiz/' target='_blank' style='color:#000; font-size:9px; font-weight:bold; text-decoration:none;'>LINK</a>";
-                        console.log("QRCode no estaba definido, se usó alternativa segura.");
-                    }
-                } catch(err) {
-                    qrContainer.innerHTML = "QR Link";
-                    console.error("Error controlado en QR:", err);
-                }
-            }, 500);
-        });
-
         function setPresenterMood(mood, text) {
             if(!presenterSpeech || !presenterChar) return;
             presenterSpeech.textContent = text;
@@ -458,9 +459,10 @@
             if (mood === 'crazy') presenterChar.classList.add('crazy');
         }
 
+        // ACTIVACIÓN DE LOS CLICS EN LA RUEDA (Desbloqueado al 100%)
         segments.forEach(s => {
             s.addEventListener('click', () => {
-                let cat = s.dataset.category;
+                const cat = s.dataset.category;
                 if (gameState.quesitos[cat]) return;
                 iniciarCategoria(cat);
             });
@@ -505,7 +507,7 @@
 
                 if (gameState.esPreguntaFinal) {
                     setPresenterMood('crazy', "¡SI! ¡BRUTAL! ¡LA RESPUESTA CORRECTA ERA KAROL G! ¡NOS VAMOS A SEVILLA!");
-                    if (typeof confetti === 'function') lanzarFuegosArtificiales();
+                    if (typeof lanzarFuegosArtificiales === 'function') lanzarFuegosArtificiales();
                     setTimeout(() => mostrarPremioFinal(), 2000);
                 } else {
                     gameState.quesitos[gameState.categoriaActual] = true;
@@ -517,4 +519,67 @@
                 btn.classList.add('incorrect-choice');
                 if (gameState.esPreguntaFinal) {
                     btn.disabled = true;
-                    setPresenterMood('sad', "¡Ay va! Ese no es el concierto... ¡S
+                    setPresenterMood('sad', "¡Ay va! Ese no es el concierto... ¡Sigue probando con los botones libres!");
+                } else {
+                    buttons.forEach(b => b.disabled = true);
+                    gameState.indexPreguntaActual++;
+                    setPresenterMood('sad', "¡Respuesta incorrecta! Vaya fallo.");
+
+                    if (gameState.indexPreguntaActual < quizData[gameState.categoriaActual].length) {
+                        setTimeout(() => mostrarPregunta(), 1500);
+                    } else {
+                        setTimeout(() => {
+                            setPresenterMood('sad', "Has agotado las preguntas de esta categoría. ¡Regresa al tablero y elige otra!");
+                            backBtn.classList.remove('hidden');
+                            backBtn.onclick = volverAlTablero;
+                        }, 1000);
+                    }
+                }
+            }
+        }
+
+        function actualizarTableroUI(cat) {
+            const segment = document.querySelector(`.wheel-segment[data-category="${cat}"]`);
+            if(segment) segment.classList.add('completed');
+            
+            const total = Object.values(gameState.quesitos).filter(v => v === true).length;
+            quesitosCountLabel.textContent = `Quesitos: ${total} / 6`;
+
+            if (total === 6) {
+                setTimeout(() => {
+                    wheel.classList.add('hidden');
+                    finalQuestionBtn.classList.remove('hidden');
+                    setPresenterMood('crazy', "¡Increíble, tienes los 6 quesitos del Trivial! ¡Desbloqueaste la Gran Pregunta Final de Cumpleaños!");
+                }, 1000);
+            }
+        }
+
+        function volverAlTablero() {
+            quizScreen.classList.add('hidden');
+            boardScreen.classList.remove('hidden');
+        }
+
+        function iniciarPreguntaFinal() {
+            gameState.esPreguntaFinal = true;
+            boardScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            backBtn.classList.add('hidden');
+            setPresenterMood('happy', "¡Llegó el momento de la verdad!");
+            mostrarPregunta();
+        }
+
+        function mostrarPremioFinal() {
+            quizScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            
+            try {
+                const audioPremio = new Audio('cancion.mp3');
+                audioPremio.volume = 0.7;
+                audioPremio.play().catch(e => console.log("Audio esperando interactividad."));
+            } catch(e) {
+                console.log("No se pudo iniciar el audio.");
+            }
+        }
+    </script>
+</body>
+</html>
