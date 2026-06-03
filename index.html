@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
-    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
-    <!-- Script de Confetti Nativo Embebido -->
     <script>
         (function() {
             window.lanzarFuegosArtificiales = function() {
@@ -148,7 +145,6 @@
             border-width: 15px 12px 0; border-style: solid; border-color: #ffffff transparent;
         }
 
-        /* Contenedor circular de las fotos */
         .birthday-host-frame {
             width: 220px;
             height: 220px;
@@ -168,7 +164,7 @@
             display: block;
         }
 
-        /* Animaciones añadidas sobre las fotos */
+        /* Animaciones dinámicas de la interfaz */
         .birthday-host-frame.dance {
             animation: hostBounce 0.4s infinite alternate;
             border-color: #2ecc71;
@@ -324,7 +320,6 @@
             <div class="presenter-panel">
                 <div class="speech-bubble" id="presenter-speech">¡Bienvenidos a mi juego! Conseguid los 6 quesitos para desbloquear mi gran pregunta final.</div>
                 
-                <!-- EL CONTENEDOR CON LA IMAGEN NORMAL DE INICIO -->
                 <div class="birthday-host-frame" id="presenter-frame">
                     <img src="normal.jpeg" id="host-img" alt="Cumpleañera Presentadora">
                 </div>
@@ -389,7 +384,7 @@
 
                 <section id="end-screen" class="screen hidden">
                     <div class="prize-container">
-                        <img src="ChatGPT Image 2 jun 2026, 10_07_12.png" alt="Premio Final" id="prize-img" onerror="this.src='https://via.placeholder.com/320x440?text=Entradas+Karol+G'">
+                        <img src="premio.png" alt="Premio Final" id="prize-img" onerror="this.src='https://via.placeholder.com/320x440?text=Entradas+Karol+G'">
                     </div>
                     <h2 style="color: var(--yellow-buzz); margin-bottom: 10px; font-size: 1.8rem;">¡ENTRADAS CONSEGUIDAS!</h2>
                     <button style="background:var(--accent); color:white; padding:10px 20px; border:none; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="location.reload()">Volver a jugar</button>
@@ -451,7 +446,6 @@
         const hostImg = document.getElementById('host-img');
         const quesitosCountLabel = document.getElementById('quesitos-count');
 
-        // FUNCIÓN CLAVE: Ahora cambia la imagen de origen física (.src) además de la clase CSS
         function setPresenterMood(mood, text) {
             if(!presenterSpeech || !presenterFrame || !hostImg) return;
             
@@ -499,7 +493,6 @@
         }
 
         function mostrarPregunta() {
-            // Cada vez que sale una pregunta nueva, se reinicia el estado a "normal"
             setPresenterMood('normal', `Pregunta de ${gameState.categoriaActual.toUpperCase()}. ¡Concentración!`);
             answersContainer.innerHTML = '';
             
@@ -525,6 +518,10 @@
                 if (gameState.esPreguntaFinal) {
                     setPresenterMood('crazy', "¡SÍÍÍ! ¡BRUTAL! ¡NOS VAMOS A VER A LA BICHOTA EN SEVILLA!");
                     if (typeof lanzarFuegosArtificiales === 'function') lanzarFuegosArtificiales();
+                    
+                    // Disparador temprano de audio para saltarse los bloqueos de navegador
+                    reproducirMusicaPremio();
+                    
                     setTimeout(() => mostrarPremioFinal(), 2000);
                 } else {
                     gameState.quesitos[gameState.categoriaActual] = true;
@@ -552,6 +549,16 @@
                         }, 1200);
                     }
                 }
+            }
+        }
+
+        function reproducirMusicaPremio() {
+            try {
+                const audioPremio = new Audio('cancion.mp3');
+                audioPremio.volume = 0.7;
+                audioPremio.play().catch(e => console.log("Audio en cola."));
+            } catch(e) {
+                console.log("Error de inicialización de audio.");
             }
         }
 
@@ -591,14 +598,6 @@
         function mostrarPremioFinal() {
             quizScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
-            
-            try {
-                const audioPremio = new Audio('cancion.mp3');
-                audioPremio.volume = 0.7;
-                audioPremio.play().catch(e => console.log("Audio esperando acción de usuario."));
-            } catch(e) {
-                console.log("No se pudo iniciar el audio.");
-            }
         }
     </script>
 </body>
