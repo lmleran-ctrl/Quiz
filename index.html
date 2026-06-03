@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
+    <!-- Script de Confetti Nativo Embebido -->
     <script>
         (function() {
             window.lanzarFuegosArtificiales = function() {
@@ -112,7 +115,7 @@
             height: 100%;
         }
 
-        /* --- PRESENTADORA PERSONALIZADA (CUMPLEAÑERA) --- */
+        /* --- PANEL DE LA CUMPLEAÑERA --- */
         .presenter-panel {
             background: rgba(0, 0, 0, 0.4);
             border-right: 2px solid rgba(255, 255, 255, 0.05);
@@ -145,16 +148,16 @@
             border-width: 15px 12px 0; border-style: solid; border-color: #ffffff transparent;
         }
 
-        /* Contenedor circular de la foto */
+        /* Contenedor circular de las fotos */
         .birthday-host-frame {
-            width: 210px;
-            height: 210px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
             border: 5px solid var(--accent);
             box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
             overflow: hidden;
-            margin-bottom: 70px;
-            transition: transform 0.3s, filter 0.3s, border-color 0.3s, box-shadow 0.3s;
+            margin-bottom: 60px;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
             background-color: #111;
         }
 
@@ -165,32 +168,28 @@
             display: block;
         }
 
-        /* Estados dinámicos de la cumpleañera */
+        /* Animaciones añadidas sobre las fotos */
         .birthday-host-frame.dance {
             animation: hostBounce 0.4s infinite alternate;
             border-color: #2ecc71;
             box-shadow: 0 0 35px rgba(46, 204, 113, 0.8);
-            filter: grayscale(0%) contrast(1.1);
         }
 
         .birthday-host-frame.sad {
             animation: hostShiver 0.15s infinite;
-            border-color: #718093;
-            box-shadow: 0 0 15px rgba(113, 128, 147, 0.4);
-            filter: grayscale(100%) brightness(0.7);
-            transform: translateY(10px) rotate(4deg);
+            border-color: #e74c3c;
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.6);
         }
 
         .birthday-host-frame.crazy {
             animation: hostJump 0.3s infinite alternate;
             border-color: var(--yellow-buzz);
             box-shadow: 0 0 40px rgba(255, 211, 42, 0.9);
-            filter: grayscale(0%) saturate(1.4);
         }
 
-        @keyframes hostBounce { from { transform: translateY(0) scale(1); } to { transform: translateY(-15px) scale(1.03); } }
-        @keyframes hostJump { from { transform: translateY(0) scale(1) rotate(-3deg); } to { transform: translateY(-30px) scale(1.06) rotate(3deg); } }
-        @keyframes hostShiver { 0%, 100% { transform: translateX(0) translateY(10px) rotate(3deg); } 50% { transform: translateX(4px) translateY(10px) rotate(5deg); } }
+        @keyframes hostBounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+        @keyframes hostJump { from { transform: translateY(0) scale(1) rotate(-2deg); } to { transform: translateY(-25px) scale(1.05) rotate(2deg); } }
+        @keyframes hostShiver { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px) translateY(2px); } }
 
         /* --- PANTALLAS --- */
         .screen { padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; }
@@ -255,7 +254,7 @@
             pointer-events: none;
         }
 
-        /* --- BOTÓN PREGUNTA FINAL ESTILO BUZZ --- */
+        /* --- BOTÓN PREGUNTA FINAL --- */
         .btn-final-trigger {
             background: radial-gradient(circle, #ff007f 0%, #c2005f 100%);
             color: #ffffff;
@@ -272,12 +271,6 @@
             animation: pulseBtn 1.5s infinite;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .btn-final-trigger:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(255, 211, 42, 0.8), inset 0 0 20px rgba(255,255,255,0.8);
-            background: radial-gradient(circle, #ff2a93 0%, #e6006f 100%);
         }
 
         @keyframes pulseBtn {
@@ -331,14 +324,14 @@
             <div class="presenter-panel">
                 <div class="speech-bubble" id="presenter-speech">¡Bienvenidos a mi juego! Conseguid los 6 quesitos para desbloquear mi gran pregunta final.</div>
                 
+                <!-- EL CONTENEDOR CON LA IMAGEN NORMAL DE INICIO -->
                 <div class="birthday-host-frame" id="presenter-frame">
-                    <img src="WhatsApp Image 2026-02-09 at 09.51.21.jpeg" alt="Cumpleañera Presentadora">
+                    <img src="normal.jpeg" id="host-img" alt="Cumpleañera Presentadora">
                 </div>
             </div>
 
             <main style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                 <section id="board-screen" class="screen">
-                    
                     <div class="wheel-container-svg" id="wheel-box">
                         <svg class="wheel-svg" viewBox="0 0 400 400">
                             <circle cx="200" cy="200" r="185" fill="none" stroke="#ffd32a" stroke-width="10" />
@@ -410,48 +403,31 @@
             ciencia: [
                 { q: "¿Cuál es el elemento químico más abundante en el universo?", a: ["Oxígeno", "Hidrógeno", "Helio", "Carbono"], c: 1 },
                 { q: "¿Qué órgano de nuestro cuerpo produce la hormona insulina?", a: ["Hígado", "Páncreas", "Riñón", "Bazo"], c: 1 },
-                { q: "¿Cuál es la velocidad de la luz de forma aproximada?", a: ["300.000 km/s", "150.000 km/s", "1.000.000 km/s", "30.000 km/s"], c: 0 },
-                { q: "¿Qué planeta de nuestro sistema solar es apodado el Planeta Rojo?", a: ["Júpiter", "Saturno", "Marte", "Venus"], c: 2 },
-                { q: "¿Cuál de estos símbolos representa al elemento químico Oro?", a: ["Fe", "Au", "Ag", "O"], c: 1 }
+                { q: "¡A ver esa ingeniera! ¿Cuál es la velocidad de la luz de forma aproximada?", a: ["300.000 km/s", "150.000 km/s", "1.000.000 km/s", "30.000 km/s"], c: 0 }
             ],
             geografia: [
                 { q: "¿Cuál es el río más largo del mundo?", a: ["Nilo", "Amazonas", "Misisipi", "Yangtsé"], c: 1 },
-                { q: "Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 },
-                { q: "¿En qué océano se encuentra la fosa de las Marianas?", a: ["Atlántico", "Pacífico", "Índico", "Ártico"], c: 1 },
-                { q: "¿Qué país tiene forma de bota en el mapa de Europa?", a: ["España", "Grecia", "Italia", "Portugal"], c: 2 },
-                { q: "¿Cuál es el desierto más cálido y grande del planeta?", a: ["Gobi", "Sáhara", "Kalahari", "Atacama"], c: 1 }
+                { q: "¿Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 }
             ],
             historia: [
                 { q: "¿En qué año cayó el Imperio Romano de Occidente?", a: ["476 d.C.", "1492 d.C.", "395 d.C.", "711 d.C."], c: 0 },
-                { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
-                { q: "¿Qué reina financió el viaje de Cristóbal Colón?", a: ["Isabel la Católica", "Juana la Loca", "María de Médici", "Isabel II"], c: 0 },
-                { q: "¿En qué país nació Adolf Hitler?", a: ["Alemania", "Austria", "Polonia", "Hungría"], c: 1 },
-                { q: "¿Qué civilización construyó las ruinas de Machu Picchu?", a: ["Mayas", "Aztecas", "Incas", "Olmecas"], c: 2 }
+                { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 }
             ],
             arte: [
                 { q: "¿Quién pintó la famosa obra de la 'Mona Lisa'?", a: ["Van Gogh", "Miguel Ángel", "Leonardo da Vinci", "Picasso"], c: 2 },
-                { q: "Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 },
-                { q: "¿A qué movimiento artístico pertenecía Salvador Dalí?", a: ["Cubismo", "Impresionismo", "Surrealismo", "Expresionismo"], c: 2 },
-                { q: "¿En qué ciudad se encuentra el famoso Museo del Louvre?", a: ["Londres", "París", "Roma", "Madrid"], c: 1 },
-                { q: "¿Quién esculpió la colosal estatua del 'David'?", a: ["Donatello", "Miguel Ángel", "Bernini", "Rodin"], c: 1 }
+                { q: "¿Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 }
             ],
             deportes: [
                 { q: "¿Qué selección nacional ha levantado más Copas del Mundo de Fútbol?", a: ["Alemania", "Italia", "Brasil", "Argentina"], c: 2 },
-                { q: "¿Quién ostenta el récord de más títulos individuales de Grand Slam masculinos?", a: ["Rafael Nadal", "Roger Federer", "Novak Djokovic", "Carlos Alcaraz"], c: 2 },
-                { q: "¿Qué jugador europeo se convirtió en el primer jugador en la historia de la NBA en ganar el premio al Jugador Más Valioso (MVP) y el MVP de las Finales en la misma temporada?", a: ["Dirk Nowitzki", "Tony Parker", "Giannis Antennompo", "Pau Gasol"], c: 2 },
-                { q: "¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 },
-                { q: "¿Quién es el máximo goleador en la historia de la Selección Española de Fútbol?", a: ["David Villa", "Fernando Torres", "Raúl González", "Álvaro Morata"], c: 0 }
+                { q: "¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 }
             ],
             entretenimiento: [
                 { q: "¿Qué cinta ganó el primer Óscar a Mejor Película de Animación?", a: ["Shrek", "Toy Story", "Monstruos S.A.", "Buscando a Nemo"], c: 0 },
-                { q: "¿Cómo se llama el héroe protagonista de la saga 'The Legend of Zelda'?", a: ["Zelda", "Link", "Mario", "Ganondorf"], c: 1 },
-                { q: "¿Qué mítica banda británica lanzó el álbum 'The Dark Side of the Moon'?", a: ["The Beatles", "Led Zeppelin", "Pink Floyd", "Queen"], c: 2 },
-                { q: "¿Quién interpretó a Jack Dawson en la película Titanic?", a: ["Brad Pitt", "Leonardo DiCaprio", "Matt Damon", "Johnny Depp"], c: 1 },
-                { q: "¿Cuál es la serie de televisión más reproducida en la historia de Netflix?", a: ["Stranger Things", "El Juego del Calamar", "La Casa de Papel", "Miercoles"], c: 1 }
+                { q: "¿Quién interpretó a Jack Dawson en la película Titanic?", a: ["Brad Pitt", "Leonardo DiCaprio", "Matt Damon", "Johnny Depp"], c: 1 }
             ],
             final: {
-                q: "¿Cuál será el próximo concierto al que acudirá la cumpleañera?",
-                a: ["Julio Iglesias", "Britney Spears", "Tino Casal", "Karol G"],
+                q: "¿Cuál será el próximo concierto al que acudirá la cumpleañera con estas entradas?",
+                a: ["Julio Iglesias", "Estopa", "Melendi", "Karol G"],
                 c: 3
             }
         };
@@ -472,15 +448,31 @@
         const backBtn = document.getElementById('back-btn');
         const presenterSpeech = document.getElementById('presenter-speech');
         const presenterFrame = document.getElementById('presenter-frame');
+        const hostImg = document.getElementById('host-img');
         const quesitosCountLabel = document.getElementById('quesitos-count');
 
+        // FUNCIÓN CLAVE: Ahora cambia la imagen de origen física (.src) además de la clase CSS
         function setPresenterMood(mood, text) {
-            if(!presenterSpeech || !presenterFrame) return;
+            if(!presenterSpeech || !presenterFrame || !hostImg) return;
+            
             presenterSpeech.textContent = text;
             presenterFrame.className = "birthday-host-frame"; 
-            if (mood === 'happy') presenterFrame.classList.add('dance');
-            if (mood === 'sad') presenterFrame.classList.add('sad');
-            if (mood === 'crazy') presenterFrame.classList.add('crazy');
+            
+            if (mood === 'normal') {
+                hostImg.src = "normal.jpeg";
+            }
+            if (mood === 'happy') {
+                hostImg.src = "acierto.jpeg";
+                presenterFrame.classList.add('dance');
+            }
+            if (mood === 'sad') {
+                hostImg.src = "error.jpeg";
+                presenterFrame.classList.add('sad');
+            }
+            if (mood === 'crazy') {
+                hostImg.src = "acierto.jpeg";
+                presenterFrame.classList.add('crazy');
+            }
         }
 
         segments.forEach(s => {
@@ -499,7 +491,6 @@
             gameState.categoriaActual = cat;
             gameState.indexPreguntaActual = 0;
             gameState.esPreguntaFinal = false;
-            setPresenterMood('happy', `¡A por el quesito de ${cat.toUpperCase()}! Sé que os la sabéis.`);
             
             boardScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
@@ -508,7 +499,10 @@
         }
 
         function mostrarPregunta() {
+            // Cada vez que sale una pregunta nueva, se reinicia el estado a "normal"
+            setPresenterMood('normal', `Pregunta de ${gameState.categoriaActual.toUpperCase()}. ¡Concentración!`);
             answersContainer.innerHTML = '';
+            
             let data = gameState.esPreguntaFinal ? quizData.final : quizData[gameState.categoriaActual][gameState.indexPreguntaActual];
             questionText.textContent = data.q;
 
@@ -529,33 +523,33 @@
                 buttons.forEach(b => b.disabled = true);
 
                 if (gameState.esPreguntaFinal) {
-                    setPresenterMood('crazy', "¡SÍ! ¡BRUTAL! ¡NOS VAMOS AL CONCIERTO DE KAROL G EN SEVILLA!");
+                    setPresenterMood('crazy', "¡SÍÍÍ! ¡BRUTAL! ¡NOS VAMOS A VER A LA BICHOTA EN SEVILLA!");
                     if (typeof lanzarFuegosArtificiales === 'function') lanzarFuegosArtificiales();
                     setTimeout(() => mostrarPremioFinal(), 2000);
                 } else {
                     gameState.quesitos[gameState.categoriaActual] = true;
                     setPresenterMood('happy', "¡Toma ya! ¡Respuesta correcta, sumamos un quesito!");
                     actualizarTableroUI(gameState.categoriaActual);
-                    setTimeout(() => volverAlTablero(), 1500);
+                    setTimeout(() => volverAlTablero(), 1800);
                 }
             } else {
                 btn.classList.add('incorrect-choice');
                 if (gameState.esPreguntaFinal) {
                     btn.disabled = true;
-                    setPresenterMood('sad', "¡Noooo! Ese no es mi concierto... ¡Pensad bien antes de pulsar!");
+                    setPresenterMood('sad', "¡Noooo! Por ahí no es... ¡Pensad bien antes de pulsar!");
                 } else {
                     buttons.forEach(b => b.disabled = true);
                     gameState.indexPreguntaActual++;
-                    setPresenterMood('sad', "¡Nooo! Esa no era... Me habéis fallado esta vez.");
+                    setPresenterMood('sad', "¡Ay... fallaste! Mira mi cara de decepción.");
 
                     if (gameState.indexPreguntaActual < quizData[gameState.categoriaActual].length) {
-                        setTimeout(() => mostrarPregunta(), 1500);
+                        setTimeout(() => mostrarPregunta(), 1800);
                     } else {
                         setTimeout(() => {
-                            setPresenterMood('sad', "Vaya, os habéis quedado sin preguntas en este quesito. ¡Volved al tablero!");
+                            setPresenterMood('sad', "Os habéis quedado sin preguntas en esta categoría. ¡A por otra!");
                             backBtn.classList.remove('hidden');
                             backBtn.onclick = volverAlTablero;
-                        }, 1000);
+                        }, 1200);
                     }
                 }
             }
@@ -574,12 +568,13 @@
                 setTimeout(() => {
                     wheelBox.classList.add('hidden');
                     finalQuestionBtn.classList.remove('hidden');
-                    setPresenterMood('crazy', "¡Increíble! ¡Tenéis los 6 quesitos! Pulsad el gran botón rojo... ¡Llegó mi pregunta definitiva!");
+                    setPresenterMood('crazy', "¡Increíble! ¡Tenéis los 6 quesitos! Pulsad el gran botón... ¡Llegó mi pregunta definitiva!");
                 }, 1000);
             }
         }
 
         function volverAlTablero() {
+            setPresenterMood('normal', "Elegid otra categoría en el tablero.");
             quizScreen.classList.add('hidden');
             boardScreen.classList.remove('hidden');
         }
@@ -589,8 +584,8 @@
             boardScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             backBtn.classList.add('hidden');
-            setPresenterMood('happy', "¡Llegó el momento! Si acertáis esto... hay regalo gordo.");
             mostrarPregunta();
+            setPresenterMood('normal', "Se viene... La pregunta del millón.");
         }
 
         function mostrarPremioFinal() {
@@ -600,7 +595,7 @@
             try {
                 const audioPremio = new Audio('cancion.mp3');
                 audioPremio.volume = 0.7;
-                audioPremio.play().catch(e => console.log("Audio esperando interactividad."));
+                audioPremio.play().catch(e => console.log("Audio esperando acción de usuario."));
             } catch(e) {
                 console.log("No se pudo iniciar el audio.");
             }
