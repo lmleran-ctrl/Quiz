@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
+    <!-- Script de Confetti Nativo Embebido -->
     <script>
         (function() {
             window.lanzarFuegosArtificiales = function() {
@@ -179,7 +182,7 @@
         .screen { padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; }
         .hidden { display: none !important; }
 
-        /* --- NUEVO TABLERO EXCLUSIVO CON SVG (Cero solapamientos) --- */
+        /* --- TABLERO EXCLUSIVO CON SVG (Cero solapamientos) --- */
         .wheel-container-svg {
             width: 380px;
             height: 380px;
@@ -229,6 +232,37 @@
             pointer-events: none;
         }
 
+        /* --- BOTÓN PREGUNTA FINAL ESTILO BUZZ --- */
+        .btn-final-trigger {
+            background: radial-gradient(circle, #ff007f 0%, #c2005f 100%);
+            color: #ffffff;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 30px 50px;
+            border: 5px solid var(--yellow-buzz);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.6), inset 0 0 15px rgba(255,255,255,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulseBtn 1.5s infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-final-trigger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255, 211, 42, 0.8), inset 0 0 20px rgba(255,255,255,0.8);
+            background: radial-gradient(circle, #ff2a93 0%, #e6006f 100%);
+        }
+
+        @keyframes pulseBtn {
+            0% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 127, 0.6); }
+            50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(255, 0, 127, 0.9); }
+            100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 127, 0.6); }
+        }
+
         /* --- PREGUNTAS --- */
         .quiz-panel { display: flex; flex-direction: column; width: 100%; }
         #question-text { font-size: 1.6rem; font-weight: 700; margin-bottom: 25px; min-height: 70px; }
@@ -260,7 +294,6 @@
             background: #222; display: flex; justify-content: center; align-items: center;
         }
         .prize-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        @keyframes pulseBtn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
     </style>
 </head>
 <body>
@@ -287,43 +320,50 @@
                 </div>
             </div>
 
-            <main style="position: relative;">
+            <main style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                 <section id="board-screen" class="screen">
                     
+                    <!-- RUEDA SVG GEOMÉTRICA -->
                     <div class="wheel-container-svg" id="wheel-box">
                         <svg class="wheel-svg" viewBox="0 0 400 400">
                             <circle cx="200" cy="200" r="185" fill="none" stroke="#ffd32a" stroke-width="10" />
                             
+                            <!-- SEGMENTO 1: CIENCIA (Verde) -->
                             <g class="wheel-segment-clickable" data-category="ciencia">
                                 <path d="M200,200 L200,20 A180,180 0 0,1 355.88,110 Z" fill="#27ae60" stroke="#150f30" stroke-width="4"/>
                                 <text x="250" y="85" class="wheel-svg-icon">&#xf0c3;</text>
                                 <text x="250" y="105" class="wheel-svg-text">CIENCIA</text>
                             </g>
 
+                            <!-- SEGMENTO 2: GEOGRAFÍA (Azul) -->
                             <g class="wheel-segment-clickable" data-category="geografia">
                                 <path d="M200,200 L355.88,110 A180,180 0 0,1 355.88,290 Z" fill="#2980b9" stroke="#150f30" stroke-width="4"/>
                                 <text x="300" y="195" class="wheel-svg-icon">&#xf5a0;</text>
                                 <text x="300" y="215" class="wheel-svg-text">GEOGRAFÍA</text>
                             </g>
 
+                            <!-- SEGMENTO 3: HISTORIA (Amarillo) -->
                             <g class="wheel-segment-clickable" data-category="historia">
                                 <path d="M200,200 L355.88,290 A180,180 0 0,1 200,380 Z" fill="#f1c40f" stroke="#150f30" stroke-width="4"/>
                                 <text x="250" y="295" class="wheel-svg-icon" fill="#000000" style="fill:#000;">&#xf66f;</text>
                                 <text x="250" y="315" class="wheel-svg-text" fill="#000000" style="fill:#000;">HISTORIA</text>
                             </g>
 
+                            <!-- SEGMENTO 4: ARTE (Morado) -->
                             <g class="wheel-segment-clickable" data-category="arte">
                                 <path d="M200,200 L200,380 A180,180 0 0,1 44.12,290 Z" fill="#8e44ad" stroke="#150f30" stroke-width="4"/>
                                 <text x="150" y="295" class="wheel-svg-icon">&#xf53f;</text>
                                 <text x="150" y="315" class="wheel-svg-text">ARTE</text>
                             </g>
 
+                            <!-- SEGMENTO 5: DEPORTES (Naranja oscuro) -->
                             <g class="wheel-segment-clickable" data-category="deportes">
                                 <path d="M200,200 L44.12,290 A180,180 0 0,1 44.12,110 Z" fill="#d35400" stroke="#150f30" stroke-width="4"/>
                                 <text x="100" y="195" class="wheel-svg-icon">&#xf447;</text>
                                 <text x="100" y="215" class="wheel-svg-text">DEPORTES</text>
                             </g>
 
+                            <!-- SEGMENTO 6: CINE (Naranja claro) -->
                             <g class="wheel-segment-clickable" data-category="entretenimiento">
                                 <path d="M200,200 L44.12,110 A180,180 0 0,1 200,20 Z" fill="#e67e22" stroke="#150f30" stroke-width="4"/>
                                 <text x="150" y="85" class="wheel-svg-icon">&#xf008;</text>
@@ -334,6 +374,7 @@
                         </svg>
                     </div>
 
+                    <!-- BOTÓN DE PREGUNTA FINAL CORREGIDO Y CENTRALIZADO -->
                     <button id="final-question-btn" class="btn-final-trigger hidden">¡PREGUNTA FINAL DE CUMPLEAÑOS!</button>
                 </section>
 
@@ -361,13 +402,13 @@
             ciencia: [
                 { q: "¿Cuál es el elemento químico más abundante en el universo?", a: ["Oxígeno", "Hidrógeno", "Helio", "Carbono"], c: 1 },
                 { q: "¿Qué órgano de nuestro cuerpo produce la hormona insulina?", a: ["Hígado", "Páncreas", "Riñón", "Bazo"], c: 1 },
-                { q: "¿Cuál es la velocidad de la luz de forma aproximada?", a: ["300.000 km/s", "150.000 km/s", "1.000.000 km/s", "30.000 km/s"], c: 0 },
+                { q: "... de forma aproximada?", a: ["300.000 km/s", "150.000 km/s", "1.000.000 km/s", "30.000 km/s"], c: 0 },
                 { q: "¿Qué planeta de nuestro sistema solar es apodado el Planeta Rojo?", a: ["Júpiter", "Saturno", "Marte", "Venus"], c: 2 },
                 { q: "¿Cuál de estos símbolos representa al elemento químico Oro?", a: ["Fe", "Au", "Ag", "O"], c: 1 },
                 { q: "¿Qué científico revolucionó el mundo con la teoría de la relatividad?", a: ["Isaac Newton", "Nikola Tesla", "Albert Einstein", "Galileo Galilei"], c: 2 }
             ],
             geografia: [
-                { q: "¿Cuál es el río más largo del mundo?", a: ["Nilo", "Amazonas", "Misisipi", "Yangtsé"], c: 1 },
+                { q: "Cuál es el río más largo del mundo?", a: ["Nilo", "Amazonas", "Misisipi", "Yangtsé"], c: 1 },
                 { q: "¿Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 },
                 { q: "¿En qué océano se encuentra la fosa de las Marianas?", a: ["Atlántico", "Pacífico", "Índico", "Ártico"], c: 1 },
                 { q: "¿Qué país tiene forma de bota en el mapa de Europa?", a: ["España", "Grecia", "Italia", "Portugal"], c: 2 },
@@ -387,7 +428,7 @@
                 { q: "¿Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 },
                 { q: "¿A qué movimiento artístico pertenecía Salvador Dalí?", a: ["Cubismo", "Impresionismo", "Surrealismo", "Expresionismo"], c: 2 },
                 { q: "¿En qué ciudad se encuentra el famoso Museo del Louvre?", a: ["Londres", "París", "Roma", "Madrid"], c: 1 },
-                { q: "¿Quién esculpió la colosal estatua del 'David'?", a: ["Donatello", "Miguel Ángel", "Bernini", "Rodin"], c: 1 },
+                { q: "Quién esculpió la colosal estatua del 'David?", a: ["Donatello", "Miguel Ángel", "Bernini", "Rodin"], c: 1 },
                 { q: "¿De qué nacionalidad era el pintor Vincent van Gogh?", a: ["Francés", "Alemán", "Neerlandés", "Belga"], c: 2 }
             ],
             deportes: [
@@ -439,7 +480,6 @@
             if (mood === 'crazy') presenterChar.classList.add('crazy');
         }
 
-        // CONTROL DE SELECCIÓN DE CATEGORÍA
         segments.forEach(s => {
             s.addEventListener('click', () => {
                 const cat = s.dataset.category;
@@ -536,7 +576,6 @@
 
         function volverAlTablero() {
             quizScreen.classList.add('hidden');
-            boardScreen.xl = false;
             boardScreen.classList.remove('hidden');
         }
 
