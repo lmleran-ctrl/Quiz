@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
+    <!-- Script de Confetti Nativo Embebido -->
     <script>
         (function() {
             window.lanzarFuegosArtificiales = function() {
@@ -164,7 +167,7 @@
             display: block;
         }
 
-        /* Animaciones dinámicas de la interfaz */
+        /* Animaciones */
         .birthday-host-frame.dance {
             animation: hostBounce 0.4s infinite alternate;
             border-color: #2ecc71;
@@ -299,11 +302,22 @@
 
         .btn-back { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; }
 
-        /* --- PREMIO FINAL --- */
+        /* --- PREMIO FINAL REOPTIMIZADO PARA CHROME --- */
         .prize-container {
-            width: 320px; height: 440px; border: 5px solid var(--yellow-buzz); border-radius: 15px;
-            overflow: hidden; box-shadow: 0 0 35px rgba(255, 211, 42, 0.6); margin-bottom: 20px;
-            background: #222; display: flex; justify-content: center; align-items: center;
+            width: 320px; 
+            min-height: 440px; 
+            border: 5px solid var(--yellow-buzz); 
+            border-radius: 15px;
+            overflow: hidden; 
+            box-shadow: 0 0 35px rgba(255, 211, 42, 0.6); 
+            margin-bottom: 20px;
+            background: #222; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            padding: 10px;
+            text-align: center;
         }
         .prize-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
     </style>
@@ -384,9 +398,17 @@
 
                 <section id="end-screen" class="screen hidden">
                     <div class="prize-container">
-                        <img src="premio.png" alt="Premio Final" id="prize-img" onerror="this.src='https://via.placeholder.com/320x440?text=Entradas+Karol+G'">
+                        <!-- Imagen con capturador de errores optimizado para Chrome -->
+                        <img src="premio.png" alt="Premio Final" id="prize-img" 
+                             onerror="this.style.display='none'; document.getElementById('backup-text').classList.remove('hidden');">
+                        
+                        <!-- Texto de respaldo si Chrome bloquea la carga local de premio.png -->
+                        <div id="backup-text" class="hidden" style="font-family: 'Fredoka', sans-serif; color: var(--yellow-buzz); font-size: 1.5rem; text-transform: uppercase;">
+                            <i class="fa-solid fa-ticket" style="font-size: 3.5rem; color: var(--accent); margin-bottom: 15px;"></i><br>
+                            ¡Tus entradas para<br>Karol G!
+                        </div>
                     </div>
-                    <h2 style="color: var(--yellow-buzz); margin-bottom: 10px; font-size: 1.8rem;">¡ENTRADAS CONSEGUIDAS!</h2>
+                    <h2 style="color: var(--yellow-buzz); margin-bottom: 10px; font-size: 1.8rem; text-align: center;">¡ENTRADAS CONSEGUIDAS!</h2>
                     <button style="background:var(--accent); color:white; padding:10px 20px; border:none; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="location.reload()">Volver a jugar</button>
                 </section>
             </main>
@@ -519,7 +541,7 @@
                     setPresenterMood('crazy', "¡SÍÍÍ! ¡BRUTAL! ¡NOS VAMOS A VER A LA BICHOTA EN SEVILLA!");
                     if (typeof lanzarFuegosArtificiales === 'function') lanzarFuegosArtificiales();
                     
-                    // Disparador temprano de audio para saltarse los bloqueos de navegador
+                    // Audio disparado en el clic para saltarse bloqueos de Chrome
                     reproducirMusicaPremio();
                     
                     setTimeout(() => mostrarPremioFinal(), 2000);
@@ -556,9 +578,9 @@
             try {
                 const audioPremio = new Audio('cancion.mp3');
                 audioPremio.volume = 0.7;
-                audioPremio.play().catch(e => console.log("Audio en cola."));
+                audioPremio.play().catch(e => console.log("Chrome en espera de interacción."));
             } catch(e) {
-                console.log("Error de inicialización de audio.");
+                console.log("Error de audio.");
             }
         }
 
