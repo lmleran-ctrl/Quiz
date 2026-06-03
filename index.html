@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BUZZ! - Trivial Especial Cumpleaños</title>
     
+    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
     
+    <!-- Script de Confetti Nativo Embebido -->
     <script>
         (function() {
             window.lanzarFuegosArtificiales = function() {
@@ -36,7 +40,7 @@
     <style>
         :root {
             --bg-dark: #090514;
-            --bg-card: #0e0a22; /* Ajustado al tono oscuro real de la captura */
+            --bg-card: #150f30;
             --accent: #ff007f; 
             --yellow-buzz: #ffd32a; 
             
@@ -44,6 +48,13 @@
             --btn-orange: #e67e22;
             --btn-green: #2ecc71;
             --btn-yellow: #f1c40f;
+            
+            --color-ciencia: #27ae60;
+            --color-geografia: #2980b9;
+            --color-historia: #f1c40f;
+            --color-arte: #8e44ad;
+            --color-deportes: #d35400;
+            --color-entretenimiento: #e67e22;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,76 +68,83 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 127, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(9, 132, 227, 0.2) 0%, transparent 50%);
             padding: 10px;
         }
 
         .game-wrapper {
             width: 100%;
             max-width: 1150px;
-            min-height: 700px;
+            min-height: 750px;
             background: var(--bg-card);
             border: 4px solid var(--yellow-buzz);
-            border-radius: 12px;
+            box-shadow: 0 0 40px rgba(255, 211, 42, 0.2);
+            border-radius: 24px;
             display: grid;
             grid-template-rows: auto 1fr;
             overflow: hidden;
         }
 
         header {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 25px;
+            padding: 15px 25px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             flex-wrap: wrap;
             gap: 10px;
         }
 
         header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 1.6rem;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
             color: var(--yellow-buzz);
-            letter-spacing: 1px;
         }
 
-        /* Marcador idéntico a "Captura de pantalla 2026-06-03 134819.png" */
         .header-score {
             font-size: 0.9rem;
             font-weight: 700;
             background: var(--accent);
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
+            padding: 6px 16px;
+            border-radius: 20px;
         }
 
         .screen-container {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 340px 1fr;
             height: 100%;
         }
 
+        /* --- PANEL DE LA CUMPLEAÑERA --- */
         .presenter-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-right: 2px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
             padding: 25px;
             position: relative;
+            min-height: 380px;
         }
 
         .speech-bubble {
             background: #ffffff;
             color: #111;
-            border-radius: 12px;
-            padding: 18px 15px;
+            border-radius: 16px;
+            padding: 15px;
             width: 90%;
+            max-width: 290px;
             font-size: 0.95rem;
             font-weight: 700;
             position: absolute;
             top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
             text-align: center;
-            border: 4px solid var(--accent);
+            border: 3px solid var(--accent);
             z-index: 10;
         }
 
@@ -136,75 +154,140 @@
         }
 
         .birthday-host-frame {
-            width: 190px;
-            height: 190px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             border: 5px solid var(--accent);
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
             overflow: hidden;
             margin-bottom: 20px;
-            transition: transform 0.3s;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
             background-color: #111;
         }
 
-        .birthday-host-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .birthday-host-frame.dance { animation: hostBounce 0.4s infinite alternate; }
-        .birthday-host-frame.sad { animation: hostShiver 0.15s infinite; border-color: #e74c3c; }
-        .birthday-host-frame.crazy { animation: hostJump 0.3s infinite alternate; }
+        .birthday-host-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Animaciones */
+        .birthday-host-frame.dance { animation: hostBounce 0.4s infinite alternate; border-color: #2ecc71; box-shadow: 0 0 35px rgba(46, 204, 113, 0.8); }
+        .birthday-host-frame.sad { animation: hostShiver 0.15s infinite; border-color: #e74c3c; box-shadow: 0 0 25px rgba(231, 76, 60, 0.6); }
+        .birthday-host-frame.crazy { animation: hostJump 0.3s infinite alternate; border-color: var(--yellow-buzz); box-shadow: 0 0 40px rgba(255, 211, 42, 0.9); }
 
         @keyframes hostBounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
-        @keyframes hostJump { from { transform: translateY(0) scale(1); } to { transform: translateY(-20px) scale(1.05); } }
+        @keyframes hostJump { from { transform: translateY(0) scale(1) rotate(-2deg); } to { transform: translateY(-25px) scale(1.05) rotate(2deg); } }
         @keyframes hostShiver { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px) translateY(2px); } }
 
-        .screen { padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
+        /* --- PANTALLAS --- */
+        .screen { padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; min-height: 100%; }
         .hidden { display: none !important; }
 
-        .wheel-container-svg { width: 100%; max-width: 360px; aspect-ratio: 1/1; position: relative; }
-        .wheel-svg { width: 100%; height: 100%; }
-        .wheel-segment-clickable { cursor: pointer; transform-origin: 200px 200px; }
+        /* --- TABLERO --- */
+        .wheel-container-svg {
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1/1;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .wheel-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(255, 211, 42, 0.25));
+        }
+
+        .wheel-segment-clickable { cursor: pointer; transition: transform 0.2s, opacity 0.2s; transform-origin: 200px 200px; }
+        .wheel-segment-clickable:hover { opacity: 0.85; transform: scale(1.02); }
         .wheel-segment-clickable.completed { cursor: not-allowed; pointer-events: none; }
-        .wheel-segment-clickable.completed path { fill: #221c38 !important; stroke: #110c22 !important; }
+        .wheel-segment-clickable.completed path { fill: #221c38 !important; stroke: #110c22 !important; stroke-width: 4; }
         .wheel-segment-clickable.completed text { fill: #443c5e !important; opacity: 0.5; }
-        .wheel-svg-text { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 900; fill: #ffffff; text-anchor: middle; pointer-events: none; }
+
+        .wheel-svg-text { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 900; fill: #ffffff; text-anchor: middle; pointer-events: none; letter-spacing: 1px; }
         .wheel-svg-icon { font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 20px; fill: #ffffff; text-anchor: middle; pointer-events: none; }
 
+        /* --- BOTÓN PREGUNTA FINAL --- */
         .btn-final-trigger {
-            background: var(--accent); color: #ffffff; font-family: 'Fredoka', sans-serif; font-size: 1.5rem;
-            padding: 20px 30px; border: 4px solid var(--yellow-buzz); border-radius: 50px; cursor: pointer;
-            text-transform: uppercase; width: 90%; text-align: center;
+            background: radial-gradient(circle, #ff007f 0%, #c2005f 100%);
+            color: #ffffff;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 20px 30px;
+            border: 4px solid var(--yellow-buzz);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.6);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            animation: pulseBtn 1.5s infinite;
+            text-transform: uppercase;
+            width: 90%;
+            text-align: center;
         }
 
-        /* Ajuste de tipografía central basado en la captura */
-        #question-text { 
-            font-size: 1.5rem; 
-            font-weight: 700; 
-            margin-bottom: 40px; 
-            text-align: center;
-            max-width: 80%;
-            line-height: 1.4;
+        @keyframes pulseBtn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
+
+        /* --- PREGUNTAS --- */
+        .quiz-panel { display: flex; flex-direction: column; width: 100%; }
+        #question-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; min-height: 60px; text-align: center; }
         
-        .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 800px; }
+        .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 20px; }
         
         .answer-btn {
-            border: 3px solid #000; border-radius: 12px; padding: 20px; font-size: 1.1rem; font-weight: 700;
-            color: #fff; cursor: pointer; box-shadow: 0 5px 0px #000000; text-align: left;
+            border: 3px solid #000; border-radius: 12px; padding: 18px; font-size: 1rem; font-weight: 700;
+            color: #fff; cursor: pointer; transition: transform 0.1s; box-shadow: 0 5px 0px #000000;
+            text-align: left; display: flex; align-items: center;
         }
+        .answer-btn::before { content: ''; width: 16px; height: 16px; border-radius: 50%; margin-right: 12px; border: 2px solid #fff; flex-shrink: 0; }
         .answer-btn:nth-child(1) { background: var(--btn-blue); }
         .answer-btn:nth-child(2) { background: var(--btn-orange); }
         .answer-btn:nth-child(3) { background: var(--btn-green); }
         .answer-btn:nth-child(4) { background: var(--btn-yellow); color: #000; }
+        .answer-btn:nth-child(4)::before { border-color: #000; }
 
+        .answer-btn:hover:not(:disabled) { transform: translateY(-2px); }
         .answer-btn:disabled { opacity: 0.2; cursor: not-allowed; }
         .answer-btn.correct-choice { background-color: #2ecc71 !important; color: #fff !important; }
         .answer-btn.incorrect-choice { background-color: #e74c3c !important; color: #fff !important; }
 
-        .btn-back { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; margin-top: 20px; }
+        .btn-back { background: rgba(255,255,255,0.1); color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 700; cursor: pointer; align-self: center; }
 
+        /* --- PREMIO FINAL --- */
+        .prize-container {
+            width: 100%;
+            max-width: 300px; 
+            min-height: 400px; 
+            border: 5px solid var(--yellow-buzz); 
+            border-radius: 15px;
+            overflow: hidden; 
+            box-shadow: 0 0 35px rgba(255, 211, 42, 0.6); 
+            margin-bottom: 20px;
+            background: #222; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+        }
+        .prize-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Responsive Móvil */
         @media (max-width: 850px) {
             .screen-container { grid-template-columns: 1fr; }
-            .presenter-panel { border-bottom: 2px solid rgba(255, 255, 255, 0.1); min-height: 280px; padding-top: 120px; }
+            .presenter-panel { border-right: none; border-bottom: 2px solid rgba(255, 255, 255, 0.1); min-height: 280px; justify-content: center; padding-top: 110px; }
+            .speech-bubble { top: 15px; }
+            .birthday-host-frame { width: 110px; height: 110px; margin-bottom: 0; }
             .answers-grid { grid-template-columns: 1fr; }
-            #question-text { font-size: 1.2rem; max-width: 100%; }
+            .game-wrapper { min-height: auto; }
+            #question-text { font-size: 1.15rem; }
         }
     </style>
 </head>
@@ -219,54 +302,63 @@
         <div class="screen-container">
             <div class="presenter-panel">
                 <div class="speech-bubble" id="presenter-speech">¡Bienvenidos a mi juego! Conseguid los 6 quesitos para desbloquear mi gran pregunta final.</div>
+                
                 <div class="birthday-host-frame" id="presenter-frame">
                     <img src="normal.jpeg" id="host-img" alt="Cumpleañera Presentadora">
                 </div>
             </div>
 
-            <main style="display: flex; width: 100%; height: 100%;">
+            <main style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
                 <section id="board-screen" class="screen">
                     <div class="wheel-container-svg" id="wheel-box">
                         <svg class="wheel-svg" viewBox="0 0 400 400">
                             <circle cx="200" cy="200" r="185" fill="none" stroke="#ffd32a" stroke-width="10" />
+                            
                             <g class="wheel-segment-clickable" data-category="ciencia">
                                 <path d="M200,200 L200,20 A180,180 0 0,1 355.88,110 Z" fill="#27ae60" stroke="#150f30" stroke-width="4"/>
                                 <text x="250" y="85" class="wheel-svg-icon">&#xf0c3;</text>
                                 <text x="250" y="105" class="wheel-svg-text">CIENCIA</text>
                             </g>
+
                             <g class="wheel-segment-clickable" data-category="geografia">
                                 <path d="M200,200 L355.88,110 A180,180 0 0,1 355.88,290 Z" fill="#2980b9" stroke="#150f30" stroke-width="4"/>
                                 <text x="300" y="195" class="wheel-svg-icon">&#xf5a0;</text>
                                 <text x="300" y="215" class="wheel-svg-text">GEOGRAFÍA</text>
                             </g>
+
                             <g class="wheel-segment-clickable" data-category="historia">
                                 <path d="M200,200 L355.88,290 A180,180 0 0,1 200,380 Z" fill="#f1c40f" stroke="#150f30" stroke-width="4"/>
                                 <text x="250" y="295" class="wheel-svg-icon" fill="#000000" style="fill:#000;">&#xf66f;</text>
                                 <text x="250" y="315" class="wheel-svg-text" fill="#000000" style="fill:#000;">HISTORIA</text>
                             </g>
+
                             <g class="wheel-segment-clickable" data-category="arte">
                                 <path d="M200,200 L200,380 A180,180 0 0,1 44.12,290 Z" fill="#8e44ad" stroke="#150f30" stroke-width="4"/>
                                 <text x="150" y="295" class="wheel-svg-icon">&#xf53f;</text>
                                 <text x="150" y="315" class="wheel-svg-text">ARTE</text>
                             </g>
+
                             <g class="wheel-segment-clickable" data-category="deportes">
                                 <path d="M200,200 L44.12,290 A180,180 0 0,1 44.12,110 Z" fill="#d35400" stroke="#150f30" stroke-width="4"/>
                                 <text x="100" y="195" class="wheel-svg-icon">&#xf447;</text>
                                 <text x="100" y="215" class="wheel-svg-text">DEPORTES</text>
                             </g>
+
                             <g class="wheel-segment-clickable" data-category="entretenimiento">
                                 <path d="M200,200 L44.12,110 A180,180 0 0,1 200,20 Z" fill="#e67e22" stroke="#150f30" stroke-width="4"/>
                                 <text x="150" y="85" class="wheel-svg-icon">&#xf008;</text>
                                 <text x="150" y="105" class="wheel-svg-text">CINE</text>
                             </g>
+
                             <circle cx="200" cy="200" r="30" fill="#150f30" stroke="#ffd32a" stroke-width="4" />
                         </svg>
                     </div>
+
                     <button id="final-question-btn" class="btn-final-trigger hidden">¡PREGUNTA FINAL!</button>
                 </section>
 
                 <section id="quiz-screen" class="screen hidden">
-                    <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
+                    <div class="quiz-panel">
                         <div id="question-text">Pregunta</div>
                         <div id="answers-container" class="answers-grid"></div>
                         <button id="back-btn" class="btn-back hidden">Volver al tablero</button>
@@ -274,46 +366,54 @@
                 </section>
 
                 <section id="end-screen" class="screen hidden">
-                    <div style="text-align:center;">
-                        <h2 style="color: var(--yellow-buzz); margin-bottom: 20px;">¡ENTRADAS CONSEGUIDAS!</h2>
-                        <button style="background:var(--accent); color:white; padding:12px 24px; border:none; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="location.reload()">Volver a jugar</button>
+                    <div class="prize-container">
+                        <img src="premio.png" alt="Premio Final" id="prize-img" 
+                             onerror="this.style.display='none'; document.getElementById('backup-text').classList.remove('hidden');">
+                        
+                        <div id="backup-text" class="hidden" style="font-family: 'Fredoka', sans-serif; color: var(--yellow-buzz); font-size: 1.5rem; text-transform: uppercase;">
+                            <i class="fa-solid fa-ticket" style="font-size: 3.5rem; color: var(--accent); margin-bottom: 15px;"></i><br>
+                            ¡Tus entradas para<br>Karol G!
+                        </div>
                     </div>
+                    <h2 style="color: var(--yellow-buzz); margin-bottom: 10px; font-size: 1.6rem; text-align: center;">¡ENTRADAS CONSEGUIDAS!</h2>
+                    <button style="background:var(--accent); color:white; padding:10px 20px; border:none; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="location.reload()">Volver a jugar</button>
                 </section>
             </main>
         </div>
     </div>
 
     <script>
+        // SOLUCIONADO: Cambiada la clave 'history' por 'historia' para que coincida perfectamente con el flujo del juego
         const quizData = {
             ciencia: [
                 { q: "¿Cuál es el elemento químico más abundante en el universo?", a: ["Oxígeno", "Hidrógeno", "Helio", "Carbono"], c: 1 },
                 { q: "¿Qué órgano de nuestro cuerpo produce la hormona insulina?", a: ["Hígado", "Páncreas", "Riñón", "Bazo"], c: 1 },
-                { q: "¿Cuál es la velocidad de la luz de forma aproximada?", a: ["300.000 km/s", "150.000 km/s", "1.000.000 km/s", "30.000 km/s"], c: 0 }
+                { q: "¡A ver esa ingeniera! ¿Cuál es la velocidad de la luz de forma aproximada?", a: ["300.000 km/s", "150.000 km/s", "1.000.000 km/s", "30.000 km/s"], c: 0 }
             ],
             geografia: [
                 { q: "¿Cuál es el río más largo del mundo?", a: ["Nilo", "Amazonas", "Misisipi", "Yangtsé"], c: 1 },
                 { q: "¿Cuál es la capital oficial de Australia?", a: ["Sídney", "Melbourne", "Canberra", "Brisbane"], c: 2 },
-                { q: "¿Qué país tiene forma de bota?", a: ["Grecia", "España", "Italia", "Portugal"], c: 2 }
+                { q: "¿Qué país tiene forma de bota y está rodeado por el mar Mediterráneo?", a: ["Grecia", "España", "Italia", "Portugal"], c: 2 }
             ],
             historia: [
                 { q: "¿En qué año cayó el Imperio Romano de Occidente?", a: ["476 d.C.", "1492 d.C.", "395 d.C.", "711 d.C."], c: 0 },
                 { q: "¿Quién fue el primer presidente de los Estados Unidos?", a: ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"], c: 2 },
-                { q: "¿Qué civilización antigua construyó Machu Picchu?", a: ["Los Aztecas", "Los Mayas", "Los Incas", "Los Olmecas"], c: 2 }
+                { q: "¿Qué civilización antigua construyó la majestuosa ciudad de Machu Picchu?", a: ["Los Aztecas", "Los Mayas", "Los Incas", "Los Olmecas"], c: 2 }
             ],
             arte: [
-                { q: "°¿Quién pintó la famosa obra de la 'Mona Lisa'?", a: ["Van Gogh", "Miguel Ángel", "Leonardo da Vinci", "Picasso"], c: 2 },
-                { q: "¿Quién escribió 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 },
-                { q: "¿A qué pintor le debemos la bóveda de la Capilla Sixtina?", a: ["Rafael", "Donatello", "Miguel Ángel", "Botticelli"], c: 2 }
+                { q: "¿Quién pintó la famosa obra de la 'Mona Lisa'?", a: ["Van Gogh", "Miguel Ángel", "Leonardo da Vinci", "Picasso"], c: 2 },
+                { q: "¿Quién escribió la mítica novela 'Don Quijote de la Mancha'?", a: ["Lope de Vega", "Miguel de Cervantes", "Quevedo", "Góngora"], c: 1 },
+                { q: "¿A qué famoso pintor renacentista le debemos la espectacular bóveda de la Capilla Sixtina?", a: ["Rafael", "Donatello", "Miguel Ángel", "Botticelli"], c: 2 }
             ],
             deportes: [
                 { q: "¿Qué selección nacional ha levantado más Copas del Mundo de Fútbol?", a: ["Alemania", "Italia", "Brasil", "Argentina"], c: 2 },
-                { q: "¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 },
-                { q: "¿Cada cuántos años se celebran los Juegos Olímpicos?", a: ["Cada 2 años", "Cada 3 años", "Cada 4 años", "Cada 5 años"], c: 2 }
+                { q: "¡A ver los futboleros! ¿Cuántas Champions League tiene el Real Madrid?", a: ["12", "13", "14", "15"], c: 3 },
+                { q: "¿Cada cuántos años se celebran tradicionalmente los Juegos Olímpicos?", a: ["Cada 2 años", "Cada 3 años", "Cada 4 años", "Cada 5 años"], c: 2 }
             ],
             entretenimiento: [
                 { q: "¿Qué cinta ganó el primer Óscar a Mejor Película de Animación?", a: ["Shrek", "Toy Story", "Monstruos S.A.", "Buscando a Nemo"], c: 0 },
                 { q: "¿Quién interpretó a Jack Dawson en la película Titanic?", a: ["Brad Pitt", "Leonardo DiCaprio", "Matt Damon", "Johnny Depp"], c: 1 },
-                { q: "¿Cómo se llama el reino ficticio de 'El Rey León'?", a: ["Far Far Away", "Las Tierras del Orgullo", "Arendelle", "Madagascar"], c: 1 }
+                { q: "¿Cómo se llama el reino ficticio donde se desarrolla la película 'El Rey León'?", a: ["Far Far Away", "Las Tierras del Orgullo", "Arendelle", "Madagascar"], c: 1 }
             ],
             final: {
                 q: "¿Cuál será el próximo concierto al que acudirá la cumpleañera?",
@@ -343,8 +443,10 @@
 
         function setPresenterMood(mood, text) {
             if(!presenterSpeech || !presenterFrame || !hostImg) return;
+            
             presenterSpeech.textContent = text;
             presenterFrame.className = "birthday-host-frame"; 
+            
             if (mood === 'normal') hostImg.src = "normal.jpeg";
             if (mood === 'happy') { hostImg.src = "acierto.jpeg"; presenterFrame.classList.add('dance'); }
             if (mood === 'sad') { hostImg.src = "error.jpeg"; presenterFrame.classList.add('sad'); }
@@ -359,7 +461,9 @@
             });
         });
 
-        if(finalQuestionBtn) finalQuestionBtn.addEventListener('click', () => iniciarPreguntaFinal());
+        if(finalQuestionBtn) {
+            finalQuestionBtn.addEventListener('click', () => iniciarPreguntaFinal());
+        }
 
         function iniciarCategoria(cat) {
             gameState.categoriaActual = cat;
@@ -374,6 +478,7 @@
         function mostrarPregunta() {
             setPresenterMood('normal', `Pregunta de ${gameState.categoriaActual.toUpperCase()}. ¡Concentración!`);
             answersContainer.innerHTML = '';
+            
             let data = gameState.esPreguntaFinal ? quizData.final : quizData[gameState.categoriaActual][gameState.indexPreguntaActual];
             questionText.textContent = data.q;
 
@@ -394,38 +499,50 @@
                 buttons.forEach(b => b.disabled = true);
 
                 if (gameState.esPreguntaFinal) {
-                    setPresenterMood('crazy', "¡SÍÍÍ! ¡BRUTAL! ¡NOS VAMOS A VER A LA BICHOTA!");
+                    setPresenterMood('crazy', "¡SÍÍÍ! ¡BRUTAL! ¡NOS VAMOS A VER A LA BICHOTA EN SEVILLA!");
                     if (typeof lanzarFuegosArtificiales === 'function') lanzarFuegosArtificiales();
+                    reproducirMusicaPremio();
                     setTimeout(() => mostrarPremioFinal(), 2000);
                 } else {
                     gameState.quesitos[gameState.categoriaActual] = true;
                     setPresenterMood('happy', "¡Toma ya! ¡Respuesta correcta, sumamos un quesito!");
                     actualizarTableroUI(gameState.categoriaActual);
+                    
                     const total = Object.values(gameState.quesitos).filter(v => v === true).length;
-                    if (total < 6) setTimeout(() => volverAlTablero(), 1800);
+                    if (total < 6) {
+                        setTimeout(() => volverAlTablero(), 1800);
+                    }
                 }
             } else {
                 btn.classList.add('incorrect-choice');
-                buttons.forEach(b => b.disabled = true);
-                
                 if (gameState.esPreguntaFinal) {
+                    btn.disabled = true;
                     setPresenterMood('sad', "¡Noooo! Por ahí no es... ¡Pensad bien antes de pulsar!");
-                    setTimeout(() => mostrarPregunta(), 1800);
                 } else {
+                    buttons.forEach(b => b.disabled = true);
                     gameState.indexPreguntaActual++;
                     setPresenterMood('sad', "¡Ay... fallaste! Mira mi cara de decepción.");
 
-                    // MEJORA RECOMENDADA: El timeout evita que el bocadillo cambie de texto instantáneamente rompiendo la lógica visual
                     if (gameState.indexPreguntaActual < quizData[gameState.categoriaActual].length) {
                         setTimeout(() => mostrarPregunta(), 1800);
                     } else {
                         setTimeout(() => {
-                            setPresenterMood('sad', "Os habéis quedado sin preguntas. ¡A por otra!");
+                            setPresenterMood('sad', "Os habéis quedado sin preguntas en esta categoría. ¡A por otra!");
                             backBtn.classList.remove('hidden');
                             backBtn.onclick = volverAlTablero;
-                        }, 1800);
+                        }, 1200);
                     }
                 }
+            }
+        }
+
+        function reproducirMusicaPremio() {
+            try {
+                const audioPremio = new Audio('cancion.mp3');
+                audioPremio.volume = 0.7;
+                audioPremio.play().catch(e => console.log("Audio listo."));
+            } catch(e) {
+                console.log("Error de audio.");
             }
         }
 
@@ -440,16 +557,17 @@
                 setTimeout(() => {
                     quizScreen.classList.add('hidden');
                     boardScreen.classList.remove('hidden');
+                    setPresenterMood('crazy', "¡Ya casi lo tienes, tú puedes!");
+                }, 1800);
+
+                setTimeout(() => {
                     wheelBox.classList.add('hidden');
                     finalQuestionBtn.classList.remove('hidden');
-                    setPresenterMood('crazy', "¡Es la hora de la verdad!");
-                }, 1800);
+                }, 5000 + 1800); 
             }
         }
 
         function volverAlTablero() {
-            // MEJORA RECOMENDADA: Limpieza del estado para evitar bloqueos futuros en la categoría
-            gameState.indexPreguntaActual = 0; 
             setPresenterMood('normal', "Elegid otra categoría en el tablero.");
             quizScreen.classList.add('hidden');
             boardScreen.classList.remove('hidden');
@@ -457,11 +575,11 @@
 
         function iniciarPreguntaFinal() {
             gameState.esPreguntaFinal = true;
-            gameState.categoriaActual = 'final';
             boardScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             backBtn.classList.add('hidden');
             mostrarPregunta();
+            setPresenterMood('normal', "Se viene... La pregunta del millón.");
         }
 
         function mostrarPremioFinal() {
